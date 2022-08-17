@@ -95,6 +95,7 @@ namespace FakeLegionZone.Model
         public void Change(string name)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            MainWindow.SaveData();
         }
     }
 
