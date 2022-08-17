@@ -205,6 +205,8 @@ namespace FakeLegionZone
 		// Token: 0x060000BD RID: 189 RVA: 0x0000412D File Offset: 0x0000232D
 		private void CheckRegistry()
 		{
+
+			RegistryHelper.Instance.CheckInstallDir();
 			RegistryHelper.Instance.CheckNameKey();
 			RegistryHelper.Instance.CheckIsGamingHelperKey();
 			RegistryHelper.Instance.DeleteOOBEKey();

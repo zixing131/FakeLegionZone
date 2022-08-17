@@ -1235,7 +1235,38 @@ namespace FakeLegionZone.Util
 			}
 			isLoEnableChanged(sender, e);
 		}
+		public void CheckInstallDir()
+		{
+			try
+			{
+				using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Lenovo\\LegionZone\\", RegistryKeyPermissionCheck.ReadWriteSubTree))
+				{
+					bool flag = false;
+					if (registryKey != null)
+					{
+						string text = (string)registryKey.GetValue("InstallDir", "");
+						if (string.IsNullOrEmpty(text))
+						{
+							RegistryKey registryKey2 = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Lenovo\\LegionZone\\", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.WriteKey);
+							registryKey2.SetValue("InstallDir", Utils.GetBasePath());
+							registryKey2.SetValue("InstallVersion", "1.0.0");
+							registryKey2.SetValue("Version", "1.0.0"); 
+							registryKey2.Close();
+						}
+					}
+					else {
+						Registry.LocalMachine.CreateSubKey("SOFTWARE\\Lenovo\\LegionZone\\");
+						CheckInstallDir();
+					}
 
+				}
+			}
+			catch (Exception ex)
+			{
+				LogHelper.Log("[RegistryHelper] [CheckNameKey] 向注册表中设置 name 值异常：" + ex.Message);
+			}
+		}
+		
 		// Token: 0x06000171 RID: 369 RVA: 0x0000952C File Offset: 0x0000772C
 		public void CheckNameKey()
 		{

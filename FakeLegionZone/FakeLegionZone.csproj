@@ -318,6 +318,24 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="1.0.0\ui\images\inforbar_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="1.0.0\ui\images\inforbar_bg_big.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="1.0.0\ui\images\inforbar_bg_small.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="1.0.0\ui\images\inforbar_bg_ver.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="1.0.0\ui\images\inforbar_bg_ver_big.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="1.0.0\ui\images\inforbar_bg_ver_small.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Resource Include="images\check1.png" />
     <Resource Include="images\check2.png" />
     <Resource Include="images\min1.png" />
