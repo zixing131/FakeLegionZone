@@ -1,0 +1,281 @@
+﻿<Application x:Class="FakeLegionZone.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:FakeLegionZone" xmlns:tb="http://www.hardcodet.net/taskbar" xmlns:converterHelper="clr-namespace:FakeLegionZone.Converters"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush
+		x:Key="GeneralForegroundBrush"
+		Color="#FFEAF7FF" />
+            <SolidColorBrush
+		x:Key="GeneralForegroundBrush_Opacity_60"
+		Color="#99EAF7FF" />
+            <FontFamily
+		x:Key="GeneralFontFamily">Microsoft YaHei</FontFamily>
+            <Style
+				x:Key="{x:Type ContextMenu}"
+				TargetType="{x:Type ContextMenu}">
+                <Setter
+					Property="Control.BorderThickness"
+					Value="1,1,1,1" />
+                <Setter
+					Property="Control.Foreground"
+					Value="{StaticResource GeneralForegroundBrush}" />
+                <Setter
+					Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate
+							TargetType="{x:Type ContextMenu}">
+                            <Grid>
+                                <Border
+									Background="#FF1A1E24"
+									BorderThickness="{TemplateBinding BorderThickness}"
+									BorderBrush="#19EAF7FF">
+                                    <ScrollViewer
+										Uid="ScrollViewer_9"
+										CanContentScroll="True"
+										Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                        <ItemsPresenter
+											Margin="{TemplateBinding Padding}"
+											SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+											KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                    </ScrollViewer>
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <Style
+				x:Key="ShowMainWindowMenuItemStyle"
+				TargetType="{x:Type MenuItem}">
+                <Setter
+					Property="FrameworkElement.Margin"
+					Value="4" />
+                <Setter
+					Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate
+							TargetType="{x:Type MenuItem}">
+                            <Grid
+								ToolTip="{TemplateBinding Header}"
+								Width="{TemplateBinding Width}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition
+										Width="Auto" />
+                                    <ColumnDefinition
+										Width="*"
+										MinWidth="80" />
+                                </Grid.ColumnDefinitions>
+                                <Border
+									Name="_border"
+									Grid.ColumnSpan="2" />
+                                <Image
+									Name="_imgicon"
+									Margin="4,3,4,3"
+									Width="26"
+									Height="26"
+									Source="/FakeLegionZone;component/images/icon_open_main_normal_52.png" />
+                                <TextBlock
+									Name="_txt"
+									Foreground="#99EAF7FF"
+									FontSize="14"
+									Grid.Column="1"
+									Margin="5 0 15 0"
+									VerticalAlignment="Center"
+									FontFamily="{StaticResource GeneralFontFamily}"
+									Text="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}" />
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger
+									Property="UIElement.IsMouseOver"
+									Value="True">
+                                    <Setter
+										TargetName="_border"
+										Property="Border.Background">
+                                        <Setter.Value>
+                                            <SolidColorBrush
+												Color="#FF39404D"
+												Opacity="0.6" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter
+										TargetName="_txt"
+										Property="TextBlock.Foreground"
+										Value="{StaticResource GeneralForegroundBrush}" />
+                                    <Setter
+										TargetName="_imgicon"
+										Property="Image.Source"
+										Value="/FakeLegionZone;component/images/icon_open_main_hover_52.png" />
+                                </Trigger>
+                                <Trigger
+									Property="MenuItem.IsPressed"
+									Value="True">
+                                    <Setter
+										TargetName="_border"
+										Property="Border.Background">
+                                        <Setter.Value>
+                                            <SolidColorBrush
+												Color="#FF39404D"
+												Opacity="0.8" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter
+										TargetName="_txt"
+										Property="TextBlock.Foreground"
+										Value="#CCEAF7FF" />
+                                    <Setter
+										TargetName="_imgicon"
+										Property="Image.Source"
+										Value="/FakeLegionZone;component/images/icon_open_main_click_52.png" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style
+				x:Key="ExitMenuItemStyle"
+				TargetType="{x:Type MenuItem}">
+                <Setter
+					Property="FrameworkElement.Margin"
+					Value="4" />
+                <Setter
+					Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate
+							TargetType="{x:Type MenuItem}">
+                            <Grid
+								ToolTip="{TemplateBinding Header}"
+								Width="{TemplateBinding Width}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition
+										Width="Auto" />
+                                    <ColumnDefinition
+										Width="*"
+										MinWidth="80" />
+                                </Grid.ColumnDefinitions>
+                                <Border
+									Name="_border"
+									Grid.ColumnSpan="2" />
+                                <Image
+									Name="_imgicon"
+									Margin="4,3,4,3"
+									Width="26"
+									Height="26"
+									Source="/FakeLegionZone;component/images/icon_exit_normal_52.png" />
+                                <TextBlock
+									Name="_txt"
+									Foreground="#99EAF7FF"
+									FontSize="14"
+									Grid.Column="1"
+									Margin="5 0 15 0"
+									VerticalAlignment="Center"
+									FontFamily="{StaticResource GeneralFontFamily}"
+									Text="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}" />
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger
+									Property="UIElement.IsMouseOver"
+									Value="True">
+                                    <Setter
+										TargetName="_border"
+										Property="Border.Background">
+                                        <Setter.Value>
+                                            <SolidColorBrush
+												Color="#FF39404D"
+												Opacity="0.6" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter
+										TargetName="_txt"
+										Property="TextBlock.Foreground"
+										Value="{StaticResource GeneralForegroundBrush}" />
+                                    <Setter
+										TargetName="_imgicon"
+										Property="Image.Source"
+										Value="/FakeLegionZone;component/images/icon_exit_hover_52.png" />
+                                </Trigger>
+                                <Trigger
+									Property="MenuItem.IsPressed"
+									Value="True">
+                                    <Setter
+										TargetName="_border"
+										Property="Border.Background">
+                                        <Setter.Value>
+                                            <SolidColorBrush
+												Color="#FF39404D"
+												Opacity="0.8" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter
+										TargetName="_txt"
+										Property="TextBlock.Foreground"
+										Value="#CCEAF7FF" />
+                                    <Setter
+										TargetName="_imgicon"
+										Property="Image.Source"
+										Value="/FakeLegionZone;component/images/icon_exit_click_52.png" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <tb:TaskbarIcon
+				x:Key="MyNotifyIcon"
+				IconSource="/images/lz_tray.ico"
+				ToolTipText="Fake Legion Zone"
+				TrayLeftMouseDown="MyNotifyIcon_TrayLeftMouseDown">
+                <FrameworkElement.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem
+							Header="显示主窗口"
+							Style="{StaticResource ShowMainWindowMenuItemStyle}"
+							Click="Show_LZMain_MenuItem_Click" />
+                        <MenuItem
+							Header="退出"
+							Style="{StaticResource ExitMenuItemStyle}"
+							Click="Exit_MenuItem_Click" />
+                    </ContextMenu>
+                </FrameworkElement.ContextMenu>
+            </tb:TaskbarIcon>
+
+            <ControlTemplate x:Key="emptyButtonTemplate" TargetType="Button">
+                <Grid x:Name="gridC"  >
+                    <Grid.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.01"></SolidColorBrush>
+                    </Grid.Background>
+                    <ContentPresenter Margin="6,2" Focusable="False"></ContentPresenter>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="true">
+                        <Setter TargetName="gridC" Property="Background">
+                            <Setter.Value>
+                                <SolidColorBrush Color="Black" Opacity="0.3"></SolidColorBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
+            <converterHelper:IntToBool x:Key="IntToBool"></converterHelper:IntToBool>
+
+            <converterHelper:IntToBoolRev x:Key="IntToBoolRev"></converterHelper:IntToBoolRev>
+
+
+
+            <converterHelper:Font2Size1 x:Key="Font2Size1"></converterHelper:Font2Size1>
+
+
+            <converterHelper:Font2Size2 x:Key="Font2Size2"></converterHelper:Font2Size2>
+
+
+            <converterHelper:Font2Size3 x:Key="Font2Size3"></converterHelper:Font2Size3>
+
+            
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

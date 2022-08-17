@@ -1,0 +1,63 @@
+
+; ==================================================================
+;
+; AMDRyzenMasterDriver.inf: Installation file for the AMD Ryzen Master Driver.
+;
+; ========== Copyright @2021 AMD. All rights reserved. ============
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=System 
+ClassGuid={4d36e97d-e325-11ce-bfc1-08002be10318} 
+Provider=%ManufacturerName%
+CatalogFile=AMDRyzenMasterDriver.cat
+DriverVer = 06/25/2021,1.9.0.0
+PnpLockdown=1
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+; ================= Class section =====================
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+AMDRyzenMasterDriver.sys  = 1,,
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NTamd64
+
+[Standard.NTamd64]
+%AMDRyzenMasterDriver.DeviceDesc%=AMDRyzenMasterDriver_Device, Root\AMDRMDRIVER ; TODO: edit hw-id
+
+[AMDRyzenMasterDriver_Device]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+AMDRyzenMasterDriver.sys
+
+;-------------- Service installation
+[AMDRyzenMasterDriver_Device.Services]
+AddService = AMDRyzenMasterDriverV19,%SPSVCINST_ASSOCSERVICE%, AMDRyzenMasterDriver_Service_Inst
+
+; -------------- AMDRyzenMasterDriver driver install sections
+[AMDRyzenMasterDriver_Service_Inst]
+DisplayName    = %AMDRyzenMasterDriver.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\AMDRyzenMasterDriver.sys
+
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="AMD" ;TODO: Replace with your manufacturer name
+ClassName="System" ; TODO: edit ClassName
+DiskName = "AMDRyzenMasterDriver Installation Disk"
+AMDRyzenMasterDriver.DeviceDesc = "AMDRyzenMaster Device"
+AMDRyzenMasterDriver.SVCDESC = "AMDRyzenMasterDriver Service"

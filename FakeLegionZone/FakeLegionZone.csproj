@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{20D4BE02-F88B-4FE5-8952-B72B8DD18645}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>FakeLegionZone</RootNamespace>
+    <AssemblyName>FakeLegionZone</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>legion_logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Hardcodet.NotifyIcon.Wpf">
+      <HintPath>dlls\Hardcodet.NotifyIcon.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Common\NativesApi.cs" />
+    <Compile Include="Converters\Font2Size1.cs" />
+    <Compile Include="Converters\Font2Size2.cs" />
+    <Compile Include="Converters\Font2Size3.cs" />
+    <Compile Include="Converters\IntToBool.cs" />
+    <Compile Include="Converters\IntToBoolRev.cs" />
+    <Compile Include="Model\CHANGEFILTERSTRUCT.cs" />
+    <Compile Include="Model\CopyDataStruct.cs" />
+    <Compile Include="Model\GameInfo.cs" />
+    <Compile Include="Model\GameModel.cs" />
+    <Compile Include="Model\LegionZoneFromType.cs" />
+    <Compile Include="Model\LZ_MSG_SELF_RUN_LZMAIN.cs" />
+    <Compile Include="Model\PerformMointorData.cs" />
+    <Compile Include="PluginDll.cs" />
+    <Compile Include="Plugin\GameDelegate.cs" />
+    <Compile Include="Plugin\GameEndedDelegate.cs" />
+    <Compile Include="Plugin\GameStartedDelegate.cs" />
+    <Compile Include="Plugin\PluginDllNotifyCallback.cs" />
+    <Compile Include="Plugin\PluginDlls.cs" />
+    <Compile Include="Plugin\PluginEventDelegate.cs" />
+    <Compile Include="Plugin\PluginNotifyCallback.cs" />
+    <Compile Include="Plugin\PluginNotifyCategory.cs" />
+    <Compile Include="Plugin\PluginProxyBase.cs" />
+    <Compile Include="Util\AnimationHelper.cs" />
+    <Compile Include="Util\CommandLine.cs" />
+    <Compile Include="Util\DialogUtil.cs" />
+    <Compile Include="Util\GlobalCurrentStatus.cs" />
+    <Compile Include="Util\JsonHelper.cs" />
+    <Compile Include="Util\LenovoOne.cs" />
+    <Compile Include="Util\LogHelper.cs" />
+    <Compile Include="Util\LudpHelper.cs" />
+    <Compile Include="Util\Message.cs" />
+    <Compile Include="Util\Optimize.cs" />
+    <Compile Include="Util\RegistryHelper.cs" />
+    <Compile Include="Util\Utils.cs" />
+    <Compile Include="Util\VerifySignature.cs" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="gaming.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="gaming2.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Plugin\amd\AMDRyzenMasterDriver.cat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Plugin\amd\AMDRyzenMasterDriver.sys">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Plugin\amd\RM1.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Plugin\NvOcScanner.exe.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LZToolkit32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LZToolKit32.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LZToolkit64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LZToolKit64.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\lz_tray.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\button_close_click_16.png" />
+    <Resource Include="images\button_close_click_32.png" />
+    <Resource Include="images\button_close_hover_16.png" />
+    <Resource Include="images\button_close_hover_32.png" />
+    <Resource Include="images\button_close_normal_16.png" />
+    <Resource Include="images\button_close_normal_32.png" />
+    <Resource Include="images\button_general_click_120_36.png" />
+    <Resource Include="images\button_general_click_240_72.png" />
+    <Resource Include="images\button_general_disable_120_36.png" />
+    <Resource Include="images\button_general_disable_240_72.png" />
+    <Resource Include="images\button_general_hover_120_36.png" />
+    <Resource Include="images\button_general_hover_240_72.png" />
+    <Resource Include="images\button_general_normal_120_36.png" />
+    <Resource Include="images\button_general_normal_240_72.png" />
+    <Resource Include="images\button_secondary_click_120_36.png" />
+    <Resource Include="images\button_secondary_click_240_72.png" />
+    <Resource Include="images\button_secondary_disable_120_36.png" />
+    <Resource Include="images\button_secondary_disable_240_72.png" />
+    <Resource Include="images\button_secondary_hover_120_36.png" />
+    <Resource Include="images\button_secondary_hover_240_72.png" />
+    <Resource Include="images\button_secondary_normal_120_36.png" />
+    <Resource Include="images\button_secondary_normal_240_72.png" />
+    <Resource Include="images\checkbox_checked_18.png" />
+    <Resource Include="images\checkbox_checked_36.png" />
+    <Resource Include="images\checkbox_checked_disable_18.png" />
+    <Resource Include="images\checkbox_checked_disable_36.png" />
+    <Resource Include="images\checkbox_disable_18.png" />
+    <Resource Include="images\checkbox_disable_36.png" />
+    <Resource Include="images\checkbox_hover_18.png" />
+    <Resource Include="images\checkbox_hover_36.png" />
+    <Resource Include="images\checkbox_normal_18.png" />
+    <Resource Include="images\checkbox_normal_36.png" />
+    <Resource Include="images\external_device_keyboard_180.png" />
+    <Resource Include="images\external_device_keyboard_90.png" />
+    <Resource Include="images\external_device_mouse_180.png" />
+    <Resource Include="images\external_device_mouse_90.png" />
+    <Resource Include="images\icon_app_default_24.png" />
+    <Resource Include="images\icon_app_default_48.png" />
+    <Resource Include="images\icon_clean_memory_180_140.png" />
+    <Resource Include="images\icon_clean_memory_90_70.png" />
+    <Resource Include="images\icon_exit_click_26.png" />
+    <Resource Include="images\icon_exit_click_52.png" />
+    <Resource Include="images\icon_exit_hover_26.png" />
+    <Resource Include="images\icon_exit_hover_52.png" />
+    <Resource Include="images\icon_exit_normal_26.png" />
+    <Resource Include="images\icon_exit_normal_52.png" />
+    <Resource Include="images\icon_ok_18.png" />
+    <Resource Include="images\icon_ok_36.png" />
+    <Resource Include="images\icon_open_main_click_26.png" />
+    <Resource Include="images\icon_open_main_click_52.png" />
+    <Resource Include="images\icon_open_main_hover_26.png" />
+    <Resource Include="images\icon_open_main_hover_52.png" />
+    <Resource Include="images\icon_open_main_normal_26.png" />
+    <Resource Include="images\icon_open_main_normal_52.png" />
+    <Resource Include="images\icon_progress_18.png" />
+    <Resource Include="images\icon_progress_36.png" />
+    <Resource Include="images\icon_warning_18.png" />
+    <Resource Include="images\icon_warning_36.png" />
+    <Resource Include="images\icon_warning_46.png" />
+    <Resource Include="images\icon_warning_92.png" />
+    <Resource Include="images\lac_install_complete_180.png" />
+    <Resource Include="images\lac_install_complete_90.png" />
+    <Resource Include="images\legion_logo.ico" />
+    <Resource Include="images\legion_logo_120.png" />
+    <Resource Include="images\legion_logo_20.png" />
+    <Resource Include="images\legion_logo_40.png" />
+    <Resource Include="images\legion_logo_60.png" />
+    <Resource Include="images\power_ac_180.png" />
+    <Resource Include="images\power_ac_90.png" />
+    <Resource Include="images\power_pd_180.png" />
+    <Resource Include="images\power_pd_90.png" />
+    <Resource Include="images\speedball_background_226.png" />
+    <Resource Include="images\speedball_background_452.png" />
+    <Resource Include="images\speedball_border_158.png" />
+    <Resource Include="images\speedball_border_316.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LZTrayPlugin.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LzUnHook32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LzUnHook64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="HardwarePlugin.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\check1.png" />
+    <Resource Include="images\check2.png" />
+    <Resource Include="images\min1.png" />
+    <Resource Include="images\min2.png" />
+    <None Include="Plugin\amd\AMDRyzenMasterDriver.inf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Plugin\amd\amd_ags_x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Plugin\amd\Device.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Plugin\amd\Platform.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Plugin\amd_ags_x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Plugin\Device.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Plugin\LZSpeeding.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Plugin\NvOcScanner.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Plugin\Pbase.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Plugin\phwcap.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Plugin\Platform.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Plugin\pLOCtrl.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Resource Include="images\radio1.png" />
+    <Resource Include="images\radio2.png" />
+    <Resource Include="images\成功.png" />
+    <Resource Include="legion_logo.ico" />
+    <Content Include="Plugin\PUSBDevCtrl.dll" />
+    <Content Include="Plugin\PWMI.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
