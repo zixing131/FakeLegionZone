@@ -149,8 +149,7 @@ namespace FakeLegionZone.Util
 
 		// Token: 0x06000146 RID: 326 RVA: 0x00007E94 File Offset: 0x00006094
 		public bool GetEnableLog()
-		{
-			return true;
+		{ 
 			bool result;
 			try
 			{
@@ -172,6 +171,39 @@ namespace FakeLegionZone.Util
 			}
 			return result;
 		}
+		
+		/// <summary>
+		/// 设置是否启用日志
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns></returns>
+		public bool SetEnableLog(bool data)
+		{ 
+			bool result;
+			try
+			{
+				using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Lenovo\\LegionZone\\", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.WriteKey))
+				{
+					if (registryKey != null)
+					{
+						registryKey.SetValue("EnableLog", data ? 1 : 0)  ;
+						result = true;
+					}
+					else
+					{
+						var registryKey2 = Registry.LocalMachine.CreateSubKey("SOFTWARE\\Lenovo\\LegionZone\\");
+						registryKey2.Close();
+						return SetEnableLog(data);
+					}
+				}
+			}
+			catch (Exception)
+			{
+				result = false;
+			}
+			return result;
+		}
+
 
 		// Token: 0x06000147 RID: 327 RVA: 0x00007F0C File Offset: 0x0000610C
 		public void DeleteOOBEKey()

@@ -139,10 +139,29 @@ namespace FakeLegionZone
 			{
 				LenovoOne.Instance.Init();
 			}
+			this.initFirstInject();
 		}
+		/// <summary>
+		/// 初始化启动时期的注入
+		/// </summary>
+		/// <exception cref="NotImplementedException"></exception>
+        private void initFirstInject()
+        {
+            try
+            {
+				var gamingcfg = File.ReadAllText("gaming.cfg"); 
+				var gamingcfg2 = File.ReadAllText("gaming2.cfg");
 
-		// Token: 0x060000BA RID: 186 RVA: 0x00003FE8 File Offset: 0x000021E8
-		protected override void OnExit(ExitEventArgs e)
+			}
+			catch(Exception ex)
+            {
+
+				LogHelper.Log("[App] [initFirstInject] 启动时注入失败：" + ex.Message);
+			}
+        }
+
+        // Token: 0x060000BA RID: 186 RVA: 0x00003FE8 File Offset: 0x000021E8
+        protected override void OnExit(ExitEventArgs e)
 		{
 			if (this.notifyIcon != null)
 			{

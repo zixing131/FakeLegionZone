@@ -143,6 +143,31 @@
                 </Track>
             </Grid>
         </ControlTemplate>
+
+        <ControlTemplate  x:Key="ckb2temp"  TargetType="CheckBox" >
+            <StackPanel Orientation="Horizontal"  FocusVisualStyle="{x:Null}" Background="Transparent" >
+                <Grid Width="64" Height="40" Background="Transparent" x:Name="gd" FocusVisualStyle="{x:Null}"   >
+                    <Image UseLayoutRounding="True"  RenderOptions.BitmapScalingMode="Fant" Source="images/check2.png" x:Name="selectImg1"></Image>
+                    <Image UseLayoutRounding="True"  RenderOptions.BitmapScalingMode="Fant" Source="images/check1.png" Visibility="Hidden" x:Name="selectImg2"></Image>
+                </Grid>
+                <ContentPresenter Margin="5,0,0,0" TextBlock.Foreground="Black"  RecognizesAccessKey="True" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+            </StackPanel>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="true"  >
+                    <Setter TargetName="selectImg2" Property="Visibility" Value="Visible" ></Setter>
+                    <Setter TargetName="selectImg1" Property="Visibility" Value="Collapsed" ></Setter>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="false"  >
+                    <Setter TargetName="selectImg2" Property="Visibility" Value="Collapsed" ></Setter>
+                    <Setter TargetName="selectImg1" Property="Visibility" Value="Visible" ></Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false"  >
+                    <Setter TargetName="selectImg2" Property="Visibility" Value="Collapsed" ></Setter>
+                    <Setter TargetName="selectImg1" Property="Visibility" Value="Collapsed" ></Setter>
+                    <Setter TargetName="gd" Property="Background" Value="LightGray" ></Setter>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
         
         <ControlTemplate x:Key="ckb1temp" TargetType="CheckBox" >
             <StackPanel Orientation="Horizontal"  FocusVisualStyle="{x:Null}" Background="Transparent" >
@@ -274,36 +299,14 @@
             <Grid Background="Transparent" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="性能监控总开关"  Margin="20 0 0 0"  Foreground="#cccccc" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                <CheckBox Name="checkall" Click="checkall_Click">
-                    <CheckBox.Template> 
-                        <ControlTemplate  TargetType="CheckBox" >
-                            <StackPanel Orientation="Horizontal"  FocusVisualStyle="{x:Null}" Background="Transparent" >
-                                <Grid Width="64" Height="40" Background="Transparent" x:Name="gd" FocusVisualStyle="{x:Null}"   >
-                                    <Image UseLayoutRounding="True"  RenderOptions.BitmapScalingMode="Fant" Source="images/check2.png" x:Name="selectImg1"></Image>
-                                    <Image UseLayoutRounding="True"  RenderOptions.BitmapScalingMode="Fant" Source="images/check1.png" Visibility="Hidden" x:Name="selectImg2"></Image>
-                                </Grid>
-                                <ContentPresenter Margin="5,0,0,0" TextBlock.Foreground="Black"  RecognizesAccessKey="True" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
-                            </StackPanel>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsChecked" Value="true"  >
-                                    <Setter TargetName="selectImg2" Property="Visibility" Value="Visible" ></Setter>
-                                    <Setter TargetName="selectImg1" Property="Visibility" Value="Collapsed" ></Setter>
-                                </Trigger>
-                                <Trigger Property="IsChecked" Value="false"  >
-                                    <Setter TargetName="selectImg2" Property="Visibility" Value="Collapsed" ></Setter>
-                                    <Setter TargetName="selectImg1" Property="Visibility" Value="Visible" ></Setter>
-                                </Trigger>
-                                <Trigger Property="IsEnabled" Value="false"  >
-                                    <Setter TargetName="selectImg2" Property="Visibility" Value="Collapsed" ></Setter>
-                                    <Setter TargetName="selectImg1" Property="Visibility" Value="Collapsed" ></Setter>
-                                    <Setter TargetName="gd" Property="Background" Value="LightGray" ></Setter>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </CheckBox.Template>
-                </CheckBox>
+                    <CheckBox Name="checkall" Click="checkall_Click" Template="{StaticResource ckb2temp}"> 
+                </CheckBox> 
+                    <TextBlock Text="日志开关"  Margin="20 0 0 0"  Foreground="#cccccc" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                    <CheckBox Name="logenable" Click="logenable_Click" Template="{StaticResource ckb2temp}">
+                     
+                    </CheckBox>
 
-             
+                
                 </StackPanel>
 
                 <TextBlock Grid.Row="4" VerticalAlignment="Center"  Foreground="#7E7E7E" Margin="0 0 40 0"

@@ -40,7 +40,7 @@ namespace FakeLegionZone.Util
                 border.CornerRadius = new CornerRadius(5);
                 border.BorderBrush = new SolidColorBrush(Colors.Gray); ;
                 border.Background = new SolidColorBrush(Colors.White);
-                border.Height = 50;
+                //border.Height = 50;
                 border.BitmapEffect = new DropShadowBitmapEffect() { Softness = 0.8, Opacity = 0.8, ShadowDepth = 5, Direction = 300 };
 
                 Grid gd = new Grid() { Background = new SolidColorBrush(Colors.White) };
@@ -62,6 +62,8 @@ namespace FakeLegionZone.Util
                 bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
                 bitmapImage.EndInit();
                 bitmapImage.Freeze();
+                image.Width = 35;
+                image.Height = 35;
                 image.Source = bitmapImage;
                 image.UseLayoutRounding = true;
                 RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.Fant);

@@ -44,9 +44,10 @@ namespace FakeLegionZone
 					RegistryHelper.Instance.SetPerformMonitorDBData(defaultSetting);
 					data = RegistryHelper.Instance.GetPerformMonitorDBData();
 				}
-				checkall.IsChecked = isenbale;
+				checkall.IsChecked = isenbale; 
+			
 				PerformMointorData config = JsonHelper.StringToObject<PerformMointorData>(data);
-				
+				logenable.IsChecked = RegistryHelper.Instance.GetEnableLog();   
 				this.DataContext = config; 
 			}
 			catch(Exception ex)
@@ -135,6 +136,27 @@ namespace FakeLegionZone
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
 			Process.Start(new ProcessStartInfo("https://legionzone.lenovo.com/game"));
+		}
+
+        private void logenable_Click(object sender, RoutedEventArgs e)
+        {
+			var isopen = logenable.IsChecked == true;
+			var ret = RegistryHelper.Instance.SetEnableLog(isopen);
+			if (ret == false)
+			{
+				DialogUtil.info("设置失败！");
+			}
+			else
+			{
+				if (isopen)
+				{
+					DialogUtil.sucess("设置成功！日志保存在\n【" + LogHelper.pathDirectory + "】\n目录下",5);
+				}
+				else
+				{
+					DialogUtil.sucess("设置成功，已关闭日志！");
+				}
+			}
 		}
     }
 }

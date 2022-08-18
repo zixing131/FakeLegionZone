@@ -71,6 +71,6 @@ namespace FakeLegionZone.Util
 		private static string logFilePath;
 
 		// Token: 0x0400009D RID: 157
-		private static string pathDirectory;
+		public static string pathDirectory;
 	}
 }

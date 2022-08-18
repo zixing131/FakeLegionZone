@@ -121,6 +121,7 @@
     <Compile Include="Converters\IntToBoolRev.cs" />
     <Compile Include="Model\CHANGEFILTERSTRUCT.cs" />
     <Compile Include="Model\CopyDataStruct.cs" />
+    <Compile Include="Model\GameCfgInfo.cs" />
     <Compile Include="Model\GameInfo.cs" />
     <Compile Include="Model\GameModel.cs" />
     <Compile Include="Model\LegionZoneFromType.cs" />
