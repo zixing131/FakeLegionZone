@@ -36,7 +36,7 @@ namespace FakeLegionZone
 		public void ReloadData()
 		{
             try
-            {
+            { 
 				var isenbale = RegistryHelper.Instance.GetIsPerformMonitor();
 				string data = RegistryHelper.Instance.GetPerformMonitorDBData();
 				if(string.IsNullOrEmpty(data))

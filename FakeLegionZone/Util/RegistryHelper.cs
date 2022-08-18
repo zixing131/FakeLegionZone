@@ -530,6 +530,40 @@ namespace FakeLegionZone.Util
 			return result;
 		}
 
+		public bool GetIsPerformMonitorReal()
+		{
+			bool flag = false;
+			bool result;
+			try
+			{
+				using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Lenovo\\LegionZone\\config\\", RegistryKeyPermissionCheck.ReadSubTree, RegistryRights.ExecuteKey))
+				{
+					if (registryKey != null)
+					{
+						int num = (int)registryKey.GetValue("IsPerformMonitorReal", -1);
+						if (num == -1)
+						{
+							result = flag;
+						}
+						else
+						{
+							result = num != 0;
+						}
+					}
+					else
+					{
+						result = flag;
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				LogHelper.Log("[RegistryHelper] [GetIsPerformMonitorReal] 从注册表读取游戏注入总开关（性能监控开关）异常：" + ex.Message);
+				result = flag;
+			}
+			return result;
+		}
+
 		public bool SetIsPerformMonitor(bool data)
 		{ 
 			bool result = false ;
@@ -553,6 +587,33 @@ namespace FakeLegionZone.Util
 			catch (Exception ex)
 			{
 				LogHelper.Log("[RegistryHelper] [GetIsPerformMonitor] 从注册表设置游戏注入总开关（性能监控开关）异常：" + ex.Message);
+			}
+			return result;
+		}
+
+		public bool SetIsPerformMonitorReal(bool data)
+		{
+			bool result = false;
+			try
+			{
+				using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Lenovo\\LegionZone\\config\\", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.WriteKey))
+				{
+					if (registryKey != null)
+					{
+						registryKey.SetValue("IsPerformMonitorReal", data ? 1 : 0);
+						result = true;
+					}
+					else
+					{
+						var registryKey2 = Registry.LocalMachine.CreateSubKey("SOFTWARE\\Lenovo\\LegionZone\\config\\");
+						registryKey2.Close();
+						return SetIsPerformMonitor(data);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				LogHelper.Log("[RegistryHelper] [SetIsPerformMonitorReal] 从注册表设置游戏注入总开关（性能监控开关）异常：" + ex.Message);
 			}
 			return result;
 		}

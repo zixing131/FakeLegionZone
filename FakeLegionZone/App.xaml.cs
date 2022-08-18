@@ -37,6 +37,9 @@ namespace FakeLegionZone
 			self = this; 
 
 			LogHelper.Log("[App] [OnStartup] LZTray 启动。");
+			var isrealenable = RegistryHelper.Instance.GetIsPerformMonitorReal();
+			RegistryHelper.Instance.SetIsPerformMonitor(isrealenable);
+
 			using (RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Lenovo\\LegionZone\\", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.FullControl))
 			{
 				if (registryKey != null)
@@ -1061,12 +1064,20 @@ namespace FakeLegionZone
 			//this.OpenLegionZone(LegionZoneFromType.tray);
 		}
 
+		private void HideBar()
+        {
+			var enable = RegistryHelper.Instance.GetIsPerformMonitor();
+			RegistryHelper.Instance.SetIsPerformMonitorReal(enable);
+			RegistryHelper.Instance.SetIsPerformMonitor(false);
+		}
+
 		// Token: 0x060000E3 RID: 227 RVA: 0x00005718 File Offset: 0x00003918
 		private void Exit_MenuItem_Click(object sender, RoutedEventArgs e)
 		{
 			bool? flag = true;// new WindowExitConfirm().ShowDialog();
 			if (flag != null && flag.Value)
 			{
+				HideBar();
 				unhookThread(); 
 
 				Optimize.Instance.StartRecovery(null);
