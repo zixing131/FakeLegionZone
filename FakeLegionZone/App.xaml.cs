@@ -152,6 +152,61 @@ namespace FakeLegionZone
 				var gamingcfg = File.ReadAllText("gaming.cfg"); 
 				var gamingcfg2 = File.ReadAllText("gaming2.cfg");
 
+				List<GameCfgInfo1> cfg1 = JsonHelper.StringToObject<List<GameCfgInfo1>>(gamingcfg);
+
+				List<GameCfgInfo2> cfg2 = JsonHelper.StringToObject<List<GameCfgInfo2>>(gamingcfg2);
+
+				Process[] processes = Process.GetProcesses();
+				List<GameInfo> injectprocesses = new List<GameInfo>();  
+
+				foreach (Process process in processes)
+                {
+					var pro = cfg1.FirstOrDefault(p => p.supportInjected && p.processName == process.ProcessName+".exe");
+					if(pro != null)
+                    {
+						if(injectprocesses.FirstOrDefault(p=>p.ProcessId == process.Id)==null)
+                        {
+							injectprocesses.Add(new GameInfo()
+							{
+								ProcessId = process.Id,
+								Is64 = Utils.Is64Process(process),
+								SupportInjected = pro.supportInjected,
+								GameName = pro.gameName
+
+							});
+						} 
+					}
+					var pro2  = cfg2.FirstOrDefault(p=> {
+						return p.processList.FirstOrDefault(p2 => p2.processName == process.ProcessName + ".exe" && p2.supportInjected) != null;
+					} );
+					if(pro2!=null)
+					{
+						if (injectprocesses.FirstOrDefault(p => p.ProcessId == process.Id) == null)
+						{
+							injectprocesses.Add(new GameInfo()
+							{
+								ProcessId = process.Id,
+								Is64 = Utils.Is64Process(process),
+								SupportInjected = true,
+								GameName = pro2.gameName
+							});
+						}
+					}
+				}
+				if(injectprocesses.Count>0)
+                { 
+					LogHelper.Log("[App] [initFirstInject] 发现"+ injectprocesses.Count + "个待注入游戏"  );
+					listStartedGame.AddRange(injectprocesses);
+					foreach (GameInfo gameinfo in injectprocesses)
+                    {
+						LogHelper.Log(string.Format("[App] [HandleGameStartEvent] 准备开始注入：process_id = {0}", gameinfo.ProcessId));
+						this.Inject(gameinfo);
+					} 
+                }
+                else
+                { 
+					LogHelper.Log("[App] [initFirstInject] 没有待注入的游戏！");
+				}
 			}
 			catch(Exception ex)
             {
@@ -1175,7 +1230,7 @@ namespace FakeLegionZone
 			for (int i = 1; i <= 1; i++)
 			{
 				LogHelper.Log(string.Format("[App] [InjectThread] 开始注入前计时：process_id = {0}, count = {1}", gameInfo.ProcessId, i));
-				Thread.Sleep(500);
+				Thread.Sleep(1000);
 				if (gameInfo.IsInjected)
 				{
 					LogHelper.Log(string.Format("[App] [InjectThread] 游戏已注入成功，停止重试：process_id = {0}", gameInfo.ProcessId));
