@@ -150,7 +150,7 @@ namespace FakeLegionZone
 		// Token: 0x06000099 RID: 153 RVA: 0x0000314C File Offset: 0x0000134C
 		public void UnInitDll()
 		{
-			PluginDll.UnInit();
+			var t = PluginDll.UnInit();
 		}
 
 		// Token: 0x0600009A RID: 154 RVA: 0x00003154 File Offset: 0x00001354

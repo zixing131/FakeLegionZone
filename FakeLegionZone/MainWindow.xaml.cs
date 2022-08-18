@@ -76,29 +76,30 @@ namespace FakeLegionZone
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-			
-			bool? flag = true;// new WindowExitConfirm().ShowDialog();
-			if (flag != null && flag.Value)
-			{
-				Optimize.Instance.StartRecovery(null);
-				Message message = App.self.message;
-				if (message != null)
-				{
-					message.SendExitMessageToLZMain();
-				}
-				LogHelper.Log("[App] [Exit_MenuItem_Click] 通知 LZMain 退出。");
-				Message message2 = App.self.message;
-				if (message2 != null)
-				{
-					message2.SendExitMessage();
-				}
-				LogHelper.Log("[App] [Exit_MenuItem_Click] 通知游戏内工具栏退出。");
-				PluginDlls.Instance.UninitPlugins();
-				LogHelper.Log("[App] [Exit_MenuItem_Click] 通知通知所有 plugin dll 退出。");
-				PluginDll.Instance.UnInitDll();
-				Application.Current.Shutdown();
-			} 
+        { 
+			//bool? flag = true;// new WindowExitConfirm().ShowDialog();
+			//if (flag != null && flag.Value)
+			//{
+			//	Optimize.Instance.StartRecovery(null);
+			//	Message message = App.self.message;
+			//	if (message != null)
+			//	{
+			//		message.SendExitMessageToLZMain();
+			//	}
+			//	LogHelper.Log("[App] [Exit_MenuItem_Click] 通知 LZMain 退出。");
+			//	Message message2 = App.self.message;
+			//	if (message2 != null)
+			//	{
+			//		message2.SendExitMessage(); 
+			//	}
+			//	//PluginDll.Instance.StopInfobarData();
+
+			//	LogHelper.Log("[App] [Exit_MenuItem_Click] 通知游戏内工具栏退出。");
+			//	PluginDlls.Instance.UninitPlugins();
+			//	LogHelper.Log("[App] [Exit_MenuItem_Click] 通知通知所有 plugin dll 退出。");
+			//	PluginDll.Instance.UnInitDll();
+			//	Application.Current.Shutdown();
+			//} 
 		}
 		 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -109,7 +110,7 @@ namespace FakeLegionZone
 
         private void btn_close_Clik(object sender, RoutedEventArgs e)
         {
-			this.Close();
+			this.Hide();
         }
 
         private void btn_min_Clik(object sender, RoutedEventArgs e)

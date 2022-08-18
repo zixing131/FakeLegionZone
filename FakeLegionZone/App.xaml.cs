@@ -793,6 +793,26 @@ namespace FakeLegionZone
 				messageEventArgs.EventData.GpuVendorId,
 				messageEventArgs.EventData.GpuDesc
 			}));
+
+			var checkprocess = this.listStartedGame.Find(p => (uint)(p.ProcessId) == messageEventArgs.EventData.ProcessId);
+			if (checkprocess ==null)
+            {
+				this.listStartedGame.Add(new GameInfo()
+				{
+					ProcessId = (int)(messageEventArgs.EventData.ProcessId),
+					ProcessName = "",
+					IsInjected = true,
+					SupportInjected = true,
+					GpuDeviceId = messageEventArgs.EventData.GpuDeviceId,
+					GpuVendorId = messageEventArgs.EventData.GpuVendorId,
+					GpuDesc = messageEventArgs.EventData.GpuDesc.ToString(),
+					Is64 = Utils.Is64Process(Process.GetProcessById((int)messageEventArgs.EventData.ProcessId)),
+					ShowAssistant = false,
+					ChangeToPerformance = false,
+					NetworkOptimization = false
+				});
+			}
+
 			Func<GameInfo, bool>  _9__1 = null;
 			ThreadPool.QueueUserWorkItem(delegate (object state)
 			{
@@ -999,28 +1019,34 @@ namespace FakeLegionZone
 		private void MyNotifyIcon_TrayLeftMouseDown(object sender, RoutedEventArgs e)
 		{
 			LogHelper.Log("[App] [MyNotifyIcon_TrayLeftMouseDown] 用户点击了托盘，启动 LZMain 主程序。");
-			using (RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Lenovo\\LegionZone\\", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.FullControl))
-			{
-				if (registryKey != null)
-				{
-					registryKey.SetValue("LaunchTime", Environment.TickCount.ToString());
-					registryKey.SetValue("LaunchWithTray", "1");
-					registryKey.SetValue("LaunchDetail", "");
-					string value = "TRAY_CLICK_RUNLZ=" + Environment.TickCount.ToString() + ";";
-					registryKey.SetValue("LaunchDetail", value);
-				}
-			}
-			this.OpenLegionZone(LegionZoneFromType.tray);
+			FakeLegionZone.MainWindow.self.Show();
+			FakeLegionZone.MainWindow.self.Topmost = true;
+			FakeLegionZone.MainWindow.self.Topmost = false;
+			FakeLegionZone.MainWindow.self.WindowState = WindowState.Normal;
+
+			//using (RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Lenovo\\LegionZone\\", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.FullControl))
+			//{
+			//	if (registryKey != null)
+			//	{
+			//		registryKey.SetValue("LaunchTime", Environment.TickCount.ToString());
+			//		registryKey.SetValue("LaunchWithTray", "1");
+			//		registryKey.SetValue("LaunchDetail", "");
+			//		string value = "TRAY_CLICK_RUNLZ=" + Environment.TickCount.ToString() + ";";
+			//		registryKey.SetValue("LaunchDetail", value);
+			//	}
+			//}
+			//this.OpenLegionZone(LegionZoneFromType.tray);
 		}
 
 		// Token: 0x060000E2 RID: 226 RVA: 0x00005664 File Offset: 0x00003864
 		private void Show_LZMain_MenuItem_Click(object sender, RoutedEventArgs e)
 		{
 			LogHelper.Log("[App] [Show_LZMain_MenuItem_Click] 用户点击了菜单，启动 LZMain 主程序。");
+			FakeLegionZone.MainWindow.self.Show();
 			FakeLegionZone.MainWindow.self.Topmost=true;
 			FakeLegionZone.MainWindow.self.Topmost = false;
 			FakeLegionZone.MainWindow.self.WindowState = WindowState.Normal;
-
+			
 			//using (RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Lenovo\\LegionZone\\", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.FullControl))
 			//{
 			//	if (registryKey != null)
@@ -1041,6 +1067,8 @@ namespace FakeLegionZone
 			bool? flag = true;// new WindowExitConfirm().ShowDialog();
 			if (flag != null && flag.Value)
 			{
+				unhookThread(); 
+
 				Optimize.Instance.StartRecovery(null);
 				Message message = this.message;
 				if (message != null)
@@ -1057,6 +1085,7 @@ namespace FakeLegionZone
 				PluginDlls.Instance.UninitPlugins();
 				LogHelper.Log("[App] [Exit_MenuItem_Click] 通知通知所有 plugin dll 退出。");
 				PluginDll.Instance.UnInitDll();
+				
 				Application.Current.Shutdown();
 			}
 		}
@@ -1080,6 +1109,30 @@ namespace FakeLegionZone
 			new Thread(new ParameterizedThreadStart(this.InjectThread)).Start(gameInfo);
 		}
 
+		private void unhookThread()
+		{
+			return;
+			//foreach (GameInfo gameInfo in listStartedGame)
+			 //         {
+			//	string text = Path.Combine(Utils.GetBasePath(), gameInfo.Is64 ? "LZToolkit64.exe" : "LZToolkit32.exe");
+			//	if (!File.Exists(text))
+			//	{
+			//		LogHelper.Log(string.Format("[App] [Inject] 注入程序文件未找到：path = {0}, process_id = {1}", text, gameInfo.ProcessId));
+			//		return;
+			//	}
+			//	string text2 = Path.Combine(Utils.GetBasePath(), gameInfo.Is64 ? "LZToolkit64.dll" : "LZToolkit32.dll");
+			//	if (!File.Exists(text2))
+			//	{
+			//		LogHelper.Log(string.Format("[App] [Inject] 注入 dll 文件未找到：path = {0}, process_id = {1}", text2, gameInfo.ProcessId));
+			//		return;
+			//	}
+
+			//	string text3 = string.Format(string.Format("{0} \"{1}\" unhook", gameInfo.ProcessId, text2), Array.Empty<object>());
+
+			//	Process.Start(text, text3);
+			//} 
+		}
+		
 		// Token: 0x060000E5 RID: 229 RVA: 0x00005868 File Offset: 0x00003A68
 		private void InjectThread(object oGameInfo)
 		{

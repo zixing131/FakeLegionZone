@@ -14,7 +14,7 @@ namespace FakeLegionZone.Util
 		{
 			bool result;
 			NativesApi.IsWow64Process(process.Handle, out result);
-			return result;
+			return !result;
 		}
 
 		// Token: 0x0600017A RID: 378 RVA: 0x000097E4 File Offset: 0x000079E4
