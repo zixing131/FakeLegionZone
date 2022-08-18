@@ -380,6 +380,7 @@
     <Resource Include="images\radio2.png" />
     <Resource Include="images\成功.png" />
     <Resource Include="legion_logo.ico" />
+    <None Include="dxapp.exe" />
     <Content Include="Plugin\PUSBDevCtrl.dll" />
     <Content Include="Plugin\PWMI.dll" />
   </ItemGroup>

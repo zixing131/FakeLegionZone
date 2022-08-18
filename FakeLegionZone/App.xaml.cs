@@ -1142,10 +1142,10 @@ namespace FakeLegionZone
 				return;
 			}
 			Func<GameInfo, bool> _9__0 = null;
-			for (int i = 1; i <= 2; i++)
+			for (int i = 1; i <= 1; i++)
 			{
 				LogHelper.Log(string.Format("[App] [InjectThread] 开始注入前计时：process_id = {0}, count = {1}", gameInfo.ProcessId, i));
-				Thread.Sleep(10000);
+				Thread.Sleep(500);
 				if (gameInfo.IsInjected)
 				{
 					LogHelper.Log(string.Format("[App] [InjectThread] 游戏已注入成功，停止重试：process_id = {0}", gameInfo.ProcessId));
