@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeLegionZone", "FakeLegionZone\FakeLegionZone.csproj", "{20D4BE02-F88B-4FE5-8952-B72B8DD18645}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibreHardwareMonitorLib", "LibreHardwareMonitorLib\LibreHardwareMonitorLib.csproj", "{6F015783-E1C5-4C8B-8522-2D77D5BC9B83}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{20D4BE02-F88B-4FE5-8952-B72B8DD18645}.Release|x64.Build.0 = Release|x64
 		{20D4BE02-F88B-4FE5-8952-B72B8DD18645}.Release|x86.ActiveCfg = Release|x86
 		{20D4BE02-F88B-4FE5-8952-B72B8DD18645}.Release|x86.Build.0 = Release|x86
+		{6F015783-E1C5-4C8B-8522-2D77D5BC9B83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F015783-E1C5-4C8B-8522-2D77D5BC9B83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F015783-E1C5-4C8B-8522-2D77D5BC9B83}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6F015783-E1C5-4C8B-8522-2D77D5BC9B83}.Debug|x64.Build.0 = Debug|Any CPU
+		{6F015783-E1C5-4C8B-8522-2D77D5BC9B83}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6F015783-E1C5-4C8B-8522-2D77D5BC9B83}.Debug|x86.Build.0 = Debug|Any CPU
+		{6F015783-E1C5-4C8B-8522-2D77D5BC9B83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F015783-E1C5-4C8B-8522-2D77D5BC9B83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F015783-E1C5-4C8B-8522-2D77D5BC9B83}.Release|x64.ActiveCfg = Release|Any CPU
+		{6F015783-E1C5-4C8B-8522-2D77D5BC9B83}.Release|x64.Build.0 = Release|Any CPU
+		{6F015783-E1C5-4C8B-8522-2D77D5BC9B83}.Release|x86.ActiveCfg = Release|Any CPU
+		{6F015783-E1C5-4C8B-8522-2D77D5BC9B83}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

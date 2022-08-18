@@ -1,34 +1,31 @@
-﻿using System;
-using System.CodeDom.Compiler;
+﻿using FakeLegionZone.Common;
+using FakeLegionZone.Model;
+using FakeLegionZone.Plugin;
+using FakeLegionZone.Util;
+using Hardcodet.Wpf.TaskbarNotification;
+using LibreHardwareMonitor.Hardware;
+using LibreHardwareMonitor.Hardware.Gpu;
+using Microsoft.Win32; 
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using FakeLegionZone.Common;
-using FakeLegionZone.Model;
-using FakeLegionZone.Plugin;
-using FakeLegionZone.Util;
-using Hardcodet.Wpf.TaskbarNotification;
-using Microsoft.Win32;
 
 namespace FakeLegionZone
 {
-	// Token: 0x02000028 RID: 40
-	public partial class App : Application, IComponentConnector
+    // Token: 0x02000028 RID: 40
+    public partial class App : Application, IComponentConnector
 	{
 		public static App self;
 		// Token: 0x060000B9 RID: 185 RVA: 0x00003C84 File Offset: 0x00001E84
@@ -140,12 +137,47 @@ namespace FakeLegionZone
 				LenovoOne.Instance.Init();
 			}
 			this.initFirstInject();
+			computer.Open();
+
+			computer.IsCpuEnabled = true;
+			computer.IsGpuEnabled = true;
+			computer.IsMemoryEnabled = true;
+			computer.IsStorageEnabled = false;
+			computer.IsControllerEnabled = true;
+			computer.IsBatteryEnabled = true;
+			computer.IsMotherboardEnabled = true;
+			computer.IsNetworkEnabled = false;
+			computer.IsPsuEnabled = true; 
+
+			Microsoft.Win32.SystemEvents.PowerModeChanged += PowerModeChanged;
+            this.timer.Interval = 1000;
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            timer.Enabled = true;
+            //var t = getFanSpeed();
+        }
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            computer.Accept(updateVisitor);
+        }
+
+        private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+
+
+        public static UpdateVisitor updateVisitor = new UpdateVisitor();
+		private void PowerModeChanged(object sender,
+				 Microsoft.Win32.PowerModeChangedEventArgs e)
+		{ 
+			if (e.Mode == Microsoft.Win32.PowerModes.Resume)
+			{
+				computer.Reset();
+			}
 		}
+
 		/// <summary>
 		/// 初始化启动时期的注入
 		/// </summary>
 		/// <exception cref="NotImplementedException"></exception>
-        private void initFirstInject()
+		private void initFirstInject()
         {
             try
             {
@@ -643,11 +675,263 @@ namespace FakeLegionZone
 			}
 		}
 
-		// Token: 0x060000D0 RID: 208 RVA: 0x00004AE0 File Offset: 0x00002CE0
-		private void HandleGameHardwareInfoChangedEvent(GameHardwareInfoChangedReceivedData hardwareInfo)
+		public static Computer computer = new Computer();
+		
+		private Tuple<int,int> getFanSpeed()
+        {
+
+			foreach(var hardware in computer.Hardware)
+            {
+				if(hardware.HardwareType == HardwareType.Motherboard)
+                {
+					foreach (var subhardware in hardware.SubHardware)
+                    {
+						if (subhardware.HardwareType == HardwareType.SuperIO)
+						{
+							foreach(var senser in subhardware.Sensors)
+                            {
+								if (senser.SensorType == SensorType.Fan)
+								{
+									if (senser.Value > 0) 
+									{	
+										int fanspeed = (int)(senser.Value);
+										int fanspeedmax = (int)(senser.Max);
+										return new Tuple<int, int>(fanspeed, fanspeedmax);
+									} 
+								} 
+							}
+						}
+                    }
+                }
+            }
+			return new Tuple<int, int>(0, 0);
+        }
+
+
+		private Tuple<int, int> getGpuFanSpeed(int deviceid)
+		{
+
+			foreach (var hardware in computer.Hardware)
+			{
+				if (hardware.HardwareType == HardwareType.GpuAmd || hardware.HardwareType == HardwareType.GpuNvidia)
+				{
+					var index = 0;
+
+					if(hardware.HardwareType == HardwareType.GpuAmd)
+                    {
+						index = (hardware as AmdGpu)._adapterInfo.AdapterIndex;
+                    }
+                    else 
+					{
+						index = (hardware as NvidiaGpu)._adapterIndex;
+					}
+					if(index!=deviceid)
+                    {
+						continue;
+                    }
+				foreach (var senser in hardware.Sensors)
+				{
+					if (senser.Name.Contains("Fan") || senser.SensorType ==  SensorType.Fan)
+					{
+						if (senser.Value > 0)
+					{
+							int fanspeed = (int)(senser.Value);
+							int fanspeedmax = (int)(senser.Max);
+
+							if (senser.SensorType == SensorType.Control)
+                            {
+									//假定
+								fanspeedmax = 3000;
+								fanspeed = 3000 * fanspeed  / 100; 
+							} 
+							 
+							return new Tuple<int, int>(fanspeed, fanspeedmax);
+						}
+					}
+			}  
+				}
+			}
+			return new Tuple<int, int>(0, 0);
+		} 
+
+		private double getCpuTemp()
+		{
+
+			foreach (var hardware in computer.Hardware)
+			{
+				if (hardware.HardwareType == HardwareType.Motherboard)
+				{
+					foreach (var subhardware in hardware.SubHardware)
+					{
+						if (subhardware.HardwareType == HardwareType.SuperIO)
+						{
+							foreach (var senser in subhardware.Sensors)
+							{
+								if (senser.SensorType == SensorType.Temperature)
+								{
+									if (senser.Value > 0)
+									{
+										double TEMP = (double)(senser.Value); 
+										return TEMP;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			return 0;
+		}
+
+
+
+		private int getCpuPower()
+		{
+
+			foreach (var hardware in computer.Hardware)
+			{
+				if (hardware.HardwareType == HardwareType.Cpu)
+				{  
+					foreach (var senser in hardware.Sensors)
+					{
+						if (senser.SensorType == SensorType.Power)
+						{
+							if (senser.Value > 0)
+							{
+								int TEMP = (int)(senser.Value);
+								return TEMP;
+							}
+						}
+					} 
+				}
+			}
+			return 0;
+		} 
+
+		private double getGpuTemp(int deviceid)
+		{
+
+			foreach (var hardware in computer.Hardware)
+			{
+				if (hardware.HardwareType == HardwareType.GpuAmd || hardware.HardwareType == HardwareType.GpuNvidia)
+				{
+					var index = 0;
+					if (hardware.HardwareType == HardwareType.GpuAmd)
+					{
+						index = (hardware as AmdGpu)._adapterInfo.AdapterIndex;
+					}
+					else
+					{
+						index = (hardware as NvidiaGpu)._adapterIndex;
+					}
+					if (index != deviceid)
+					{
+						continue;
+					}
+					foreach (var senser in hardware.Sensors)
+					{
+						if ( senser.SensorType == SensorType.Temperature)
+						{
+							if (senser.Value > 0)
+							{
+								double TEMP = (double)(senser.Value);
+								return TEMP;
+							}
+						}
+					}
+				}
+			} 
+			return 0;
+		}
+
+		private int getGpuPower(int deviceid)
+		{ 
+			foreach (var hardware in computer.Hardware)
+			{
+				if (hardware.HardwareType == HardwareType.GpuAmd || hardware.HardwareType == HardwareType.GpuNvidia)
+				{
+					var index = 0;
+
+					if (hardware.HardwareType == HardwareType.GpuAmd)
+					{
+						index = (hardware as AmdGpu)._adapterInfo.AdapterIndex;
+					}
+					else
+					{
+						index = (hardware as NvidiaGpu)._adapterIndex;
+					}
+					if (index != deviceid)
+					{
+						continue;
+					}
+					foreach (var senser in hardware.Sensors)
+					{
+						if (senser.SensorType == SensorType.Power)
+						{
+							if (senser.Value > 0)
+							{
+								int TEMP = (int)(senser.Value);
+								return TEMP;
+							}
+						}
+					}
+				}
+			}
+			return 0;
+		}
+
+
+		/// <summary>
+		/// 重新处理数据
+		/// </summary>
+		/// <param name="hardwareInfo"></param>
+		private void ProcessWithComputer(ref GameHardwareInfoChangedReceivedData hardwareInfo)
+        {
+			if(hardwareInfo.CPUInfo.Fan_Speed <= 0 )
+            {
+				var fanspeed = getFanSpeed();
+
+				hardwareInfo.CPUInfo.Fan_Speed = fanspeed.Item1;
+				hardwareInfo.CPUInfo.Fan_Speed_Max = fanspeed.Item2; 
+			}
+
+			if(hardwareInfo.CPUInfo.Temperature<=0)
+            {
+				hardwareInfo.CPUInfo.Temperature = getCpuTemp();
+			}
+			if (hardwareInfo.CPUInfo.Power <= 0)
+			{
+				hardwareInfo.CPUInfo.Power = getCpuPower();
+			}
+
+			if (hardwareInfo.GPUInfo.Count > 0)
+			{
+				foreach (var gpuinfo in hardwareInfo.GPUInfo)
+				{
+					if (gpuinfo.Fan_Speed <= 0)
+					{
+						var gpufanspeed = getGpuFanSpeed(gpuinfo.DeviceID);
+						gpuinfo.Fan_Speed = gpufanspeed.Item1;
+						gpuinfo.Fan_Speed_Max = gpufanspeed.Item2;
+					}
+					if (gpuinfo.Temperature <= 0)
+                    {
+						gpuinfo.Temperature = getGpuTemp(gpuinfo.DeviceID);
+					}
+					if (gpuinfo.Power <= 0)
+					{
+						gpuinfo.Power = getGpuPower(gpuinfo.DeviceID);
+					} 
+				} 
+			}
+		}
+
+        // Token: 0x060000D0 RID: 208 RVA: 0x00004AE0 File Offset: 0x00002CE0
+        private void HandleGameHardwareInfoChangedEvent(GameHardwareInfoChangedReceivedData hardwareInfo)
 		{
 			try
 			{
+				ProcessWithComputer(ref hardwareInfo);
 				int loadPercent = hardwareInfo.CPUInfo.LoadPercent;
 				int cpuFreq = Convert.ToInt32(hardwareInfo.CPUInfo.CurFreq * 100.0);
 				Convert.ToInt32(hardwareInfo.CPUInfo.FreqMax);
@@ -672,6 +956,9 @@ namespace FakeLegionZone
 					gpu_power = hardwareInfo.GPUInfo[0].Power;
 					gpu_mem_usage = hardwareInfo.GPUInfo[0].Mem_Usage;
 				}
+
+
+
 				LZ_MSG_DEVICE_INFO deviceInfo = new LZ_MSG_DEVICE_INFO
 				{
 					CpuPercent = loadPercent,
@@ -1152,7 +1439,8 @@ namespace FakeLegionZone
 			if (flag != null && flag.Value)
 			{
 				HideBar();
-				unhookThread(); 
+				computer.Close();
+				unhookThread();  
 
 				Optimize.Instance.StartRecovery(null);
 				Message message = this.message;

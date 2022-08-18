@@ -95,6 +95,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -148,6 +149,7 @@
     <Compile Include="Util\Message.cs" />
     <Compile Include="Util\Optimize.cs" />
     <Compile Include="Util\RegistryHelper.cs" />
+    <Compile Include="Util\UpdateVisitor.cs" />
     <Compile Include="Util\Utils.cs" />
     <Compile Include="Util\VerifySignature.cs" />
     <Page Include="MainWindow.xaml">
@@ -384,6 +386,12 @@
     <None Include="dxapp.exe" />
     <Content Include="Plugin\PUSBDevCtrl.dll" />
     <Content Include="Plugin\PWMI.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibreHardwareMonitorLib\LibreHardwareMonitorLib.csproj">
+      <Project>{6f015783-e1c5-4c8b-8522-2d77d5bc9b83}</Project>
+      <Name>LibreHardwareMonitorLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
