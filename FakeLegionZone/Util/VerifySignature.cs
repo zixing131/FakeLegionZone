@@ -12,7 +12,11 @@ namespace FakeLegionZone.Util
 	{
 		// Token: 0x06000180 RID: 384 RVA: 0x00009874 File Offset: 0x00007A74
 		public static bool Verify(string fileName)
-		{
+		{ 
+            //取消签名验证
+            
+            return true;
+           
 			if (File.Exists(Utils.GetBasePath() + "NO_SIGNA.CFG"))
 			{
 				return true;

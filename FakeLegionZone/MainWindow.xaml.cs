@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,10 +30,17 @@ namespace FakeLegionZone
         {
             InitializeComponent();
 			self = this;
-			ReloadData();
+			this.Loaded += MainWindow_Loaded;
+			
 			this.Closing += MainWindow_Closing;
         }
-		private string defaultSetting = "{\"FPS\":1,\"GPU\":{\"Clock\":1,\"Usage\":1,\"Temperature\":0,\"Power\":0,\"FanSpeed\":0,\"Mem_Usage\":0},\"CPU\":{\"Clock\":1,\"Usage\":1,\"Temperature\":0,\"Power\":0,\"FanSpeed\":0},\"MEM\":{\"Clock\":1,\"Usage\":1},\"Orientation\":0,\"Location\":1,\"FontSize\":20}";
+
+		private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+		{ 
+            ReloadData();
+        }
+        
+        private string defaultSetting = "{\"FPS\":1,\"GPU\":{\"Clock\":1,\"Usage\":1,\"Temperature\":0,\"Power\":0,\"FanSpeed\":0,\"Mem_Usage\":0},\"CPU\":{\"Clock\":1,\"Usage\":1,\"Temperature\":0,\"Power\":0,\"FanSpeed\":0},\"MEM\":{\"Clock\":1,\"Usage\":1},\"Orientation\":0,\"Location\":1,\"FontSize\":20}";
 		public void ReloadData()
 		{
             try
@@ -56,6 +64,15 @@ namespace FakeLegionZone
             }
 		}
 
+        /// <summary>
+		/// 重载插件的hook
+		/// </summary>
+  //      public static void ReloadPlugHook()
+		//{
+  //          App.self.UnInjectAll();
+  //          App.self.initFirstInject();
+  //      }
+        
 		public static void SaveData()
         {
             try
@@ -66,8 +83,10 @@ namespace FakeLegionZone
 					if (!RegistryHelper.Instance.SetPerformMonitorDBData(JsonHelper.ObjectToString(config)))
 					{
 						DialogUtil.info("保存配置失败");
-					}
-				} 
+						return;
+					} 
+					//ReloadPlugHook(); 
+                } 
 			}
 			catch(Exception ex)
             { 
@@ -77,32 +96,34 @@ namespace FakeLegionZone
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        { 
-			//bool? flag = true;// new WindowExitConfirm().ShowDialog();
-			//if (flag != null && flag.Value)
-			//{
-			//	Optimize.Instance.StartRecovery(null);
-			//	Message message = App.self.message;
-			//	if (message != null)
-			//	{
-			//		message.SendExitMessageToLZMain();
-			//	}
-			//	LogHelper.Log("[App] [Exit_MenuItem_Click] 通知 LZMain 退出。");
-			//	Message message2 = App.self.message;
-			//	if (message2 != null)
-			//	{
-			//		message2.SendExitMessage(); 
-			//	}
-			//	//PluginDll.Instance.StopInfobarData();
+        {
+            App.self.UnInjectAll();
+            
+            //bool? flag = true;// new WindowExitConfirm().ShowDialog();
+            //if (flag != null && flag.Value)
+            //{
+            //	Optimize.Instance.StartRecovery(null);
+            //	Message message = App.self.message;
+            //	if (message != null)
+            //	{
+            //		message.SendExitMessageToLZMain();
+            //	}
+            //	LogHelper.Log("[App] [Exit_MenuItem_Click] 通知 LZMain 退出。");
+            //	Message message2 = App.self.message;
+            //	if (message2 != null)
+            //	{
+            //		message2.SendExitMessage(); 
+            //	}
+            //	//PluginDll.Instance.StopInfobarData();
 
-			//	LogHelper.Log("[App] [Exit_MenuItem_Click] 通知游戏内工具栏退出。");
-			//	PluginDlls.Instance.UninitPlugins();
-			//	LogHelper.Log("[App] [Exit_MenuItem_Click] 通知通知所有 plugin dll 退出。");
-			//	PluginDll.Instance.UnInitDll();
-			//	Application.Current.Shutdown();
-			//} 
-		}
-		 
+            //	LogHelper.Log("[App] [Exit_MenuItem_Click] 通知游戏内工具栏退出。");
+            //	PluginDlls.Instance.UninitPlugins();
+            //	LogHelper.Log("[App] [Exit_MenuItem_Click] 通知通知所有 plugin dll 退出。");
+            //	PluginDll.Instance.UnInitDll();
+            //	Application.Current.Shutdown();
+            //} 
+        }
+        
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
 			DragMove();  
@@ -129,7 +150,14 @@ namespace FakeLegionZone
             }
             else
             {
-				//DialogUtil.sucess("设置成功！");
+                if(isopen)
+                {
+                    App.self.initFirstInject();
+                }
+                //else
+                //{
+                //    App.self.UnInjectAll();
+                //}
 			}
         }
 
@@ -158,5 +186,21 @@ namespace FakeLegionZone
 				}
 			}
 		}
+
+        /// <summary>
+        /// 重载配置
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DialogUtil.sucess("已请求重载，可能需要等待数秒！");
+            Task.Run(() =>
+            {
+                App.self.UnInjectAll();
+            }).ContinueWith((r) => {
+                App.self.initFirstInject();
+            });
+        }
     }
 }

@@ -316,11 +316,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="HardwarePlugin.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="1.0.0\ui\images\inforbar_bg.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

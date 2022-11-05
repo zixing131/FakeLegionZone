@@ -2,44 +2,48 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FakeLegionZone"
-        mc:Ignorable="d"
-        Icon="images/legion_logo.ico"
-        WindowStyle="None"
-        d:DataContext="{d:DesignInstance Type={x:Type model:PerformMointorData}}"
-        WindowStartupLocation="CenterScreen"
-        ResizeMode="CanResize"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:model="clr-namespace:FakeLegionZone.Model"
-        AllowsTransparency="True" 
-        Background="#191d23"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:model="clr-namespace:FakeLegionZone.Model"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        Title="FakeLegionZone"
+        Width="800"
+        Height="670"
         Margin="0"
-         BorderThickness="1"
-        BorderBrush="#202020"
-        Style="{x:Null}"
         Padding="0"
-        Title="FakeLegionZone" Height="670" Width="800">
+        d:DataContext="{d:DesignInstance Type={x:Type model:PerformMointorData}}"
+        AllowsTransparency="True"
+        Background="#191d23"
+        BorderBrush="#202020"
+        BorderThickness="1"
+        Icon="images/legion_logo.ico"
+        ResizeMode="CanResize"
+        Style="{x:Null}"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        mc:Ignorable="d"
+        >
     <Window.Resources>
 
         <!--  1.确定参数  -->
-        <!--纵向滚动条宽度-->
-        <sys:Double   x:Key="VerticalScrollBarThickness">8</sys:Double>
-        <!--纵向轨道背景色-->
+        <!--  纵向滚动条宽度  -->
+        <sys:Double x:Key="VerticalScrollBarThickness">8</sys:Double>
+        <!--  纵向轨道背景色  -->
         <SolidColorBrush x:Key="VerticalTrackBackgroundBrush" Color="Transparent" />
-        <!--纵向滑块颜色-->
+        <!--  纵向滑块颜色  -->
         <SolidColorBrush x:Key="VerticalTrackThumbBackgroundBrush" Color="#cccccc" />
-        <!--纵向滑块圆角-->
-        <CornerRadius x:Key="VerticalThumbCornerRadius"  >2</CornerRadius>
-        <!--横向滚动条宽度-->
+        <!--  纵向滑块圆角  -->
+        <CornerRadius x:Key="VerticalThumbCornerRadius">2</CornerRadius>
+        <!--  横向滚动条宽度  -->
         <sys:Double x:Key="HorizontalScrollBarThickness">4</sys:Double>
-        <!--横向轨道背景色-->
+        <!--  横向轨道背景色  -->
         <SolidColorBrush x:Key="HorizontalTrackBackgroundBrush" Color="Transparent" />
-        <!--横向滑块颜色-->
+        <!--  横向滑块颜色  -->
         <SolidColorBrush x:Key="HorizontalTrackThumbBackgroundBrush" Color="#cccccc" />
-        <!--横向滑块圆角-->
-        <CornerRadius x:Key="HorizontalThumbCornerRadius" >2</CornerRadius>
+        <!--  横向滑块圆角  -->
+        <CornerRadius x:Key="HorizontalThumbCornerRadius">2</CornerRadius>
 
-        <!-- 2.定义Style  -->
+        <!--  2.定义Style  -->
         <Style x:Key="ScrollStyle_Mobile" TargetType="ScrollBar">
             <Style.Triggers>
                 <Trigger Property="Orientation" Value="Horizontal">
@@ -59,7 +63,7 @@
                     <Setter Property="Height" Value="Auto" />
                     <Setter Property="Template" Value="{DynamicResource VerticalScrollBar}" />
                 </Trigger>
-                <Trigger Property="IsMouseOver" Value="False"> 
+                <Trigger Property="IsMouseOver" Value="False">
                     <Setter Property="Opacity" Value="0.6" />
                     <Setter Property="Width" Value="5" />
                     <Setter Property="Height" Value="Auto" />
@@ -69,27 +73,26 @@
             </Style.Triggers>
         </Style>
 
-        <!-- 3.定义template  -->
-        <!-- 纵向滚动条template  -->
+        <!--  3.定义template  -->
+        <!--  纵向滚动条template  -->
         <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
             <Border Width="{DynamicResource VerticalScrollBarThickness}" Background="{DynamicResource VerticalTrackBackgroundBrush}">
-                <Track 
-                Name="PART_Track"
-                IsDirectionReversed="true">
+                <Track Name="PART_Track" IsDirectionReversed="true">
                     <Track.DecreaseRepeatButton>
                         <RepeatButton Command="ScrollBar.PageUpCommand" Focusable="False">
                             <RepeatButton.Template>
                                 <ControlTemplate>
-                                    <Border Background="Transparent"></Border>
+                                    <Border Background="Transparent">
+                                    </Border>
                                 </ControlTemplate>
                             </RepeatButton.Template>
                         </RepeatButton>
                     </Track.DecreaseRepeatButton>
                     <Track.Thumb>
-                        <Thumb Width="{TemplateBinding Width}"  Focusable="False">
+                        <Thumb Width="{TemplateBinding Width}" Focusable="False">
                             <Thumb.Template>
                                 <ControlTemplate>
-                                    <Border Background="{DynamicResource VerticalTrackThumbBackgroundBrush}"   CornerRadius="{DynamicResource VerticalThumbCornerRadius}" />
+                                    <Border Background="{DynamicResource VerticalTrackThumbBackgroundBrush}" CornerRadius="{DynamicResource VerticalThumbCornerRadius}" />
                                 </ControlTemplate>
                             </Thumb.Template>
                         </Thumb>
@@ -98,7 +101,8 @@
                         <RepeatButton Command="ScrollBar.PageDownCommand" Focusable="False">
                             <RepeatButton.Template>
                                 <ControlTemplate>
-                                    <Border Background="Transparent"></Border>
+                                    <Border Background="Transparent">
+                                    </Border>
                                 </ControlTemplate>
                             </RepeatButton.Template>
                         </RepeatButton>
@@ -106,27 +110,28 @@
                 </Track>
             </Border>
         </ControlTemplate>
-        <!-- 横向滚动条template  -->
+        <!--  横向滚动条template  -->
         <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
             <Grid Background="{DynamicResource HorizontalTrackBackgroundBrush}">
-                <Track
-                Name="PART_Track"
-                Grid.Column="1"
-                IsDirectionReversed="False">
+                <Track Name="PART_Track"
+                       Grid.Column="1"
+                       IsDirectionReversed="False"
+                       >
                     <Track.DecreaseRepeatButton>
                         <RepeatButton Command="ScrollBar.PageLeftCommand" Focusable="False">
                             <RepeatButton.Template>
                                 <ControlTemplate>
-                                    <Border Background="Transparent"></Border>
+                                    <Border Background="Transparent">
+                                    </Border>
                                 </ControlTemplate>
                             </RepeatButton.Template>
                         </RepeatButton>
                     </Track.DecreaseRepeatButton>
                     <Track.Thumb>
-                        <Thumb Height="{TemplateBinding Height}" >
+                        <Thumb Height="{TemplateBinding Height}">
                             <Thumb.Template>
                                 <ControlTemplate>
-                                    <Border Background="{DynamicResource HorizontalTrackThumbBackgroundBrush}"   CornerRadius="{DynamicResource HorizontalThumbCornerRadius}" />
+                                    <Border Background="{DynamicResource HorizontalTrackThumbBackgroundBrush}" CornerRadius="{DynamicResource HorizontalThumbCornerRadius}" />
                                 </ControlTemplate>
                             </Thumb.Template>
                         </Thumb>
@@ -135,7 +140,8 @@
                         <RepeatButton Command="ScrollBar.PageRightCommand" Focusable="False">
                             <RepeatButton.Template>
                                 <ControlTemplate>
-                                    <Border Background="Transparent"></Border>
+                                    <Border Background="Transparent">
+                                    </Border>
                                 </ControlTemplate>
                             </RepeatButton.Template>
                         </RepeatButton>
@@ -144,112 +150,229 @@
             </Grid>
         </ControlTemplate>
 
-        <ControlTemplate  x:Key="ckb2temp"  TargetType="CheckBox" >
-            <StackPanel Orientation="Horizontal"  FocusVisualStyle="{x:Null}" Background="Transparent" >
-                <Grid Width="64" Height="40" Background="Transparent" x:Name="gd" FocusVisualStyle="{x:Null}"   >
-                    <Image UseLayoutRounding="True"  RenderOptions.BitmapScalingMode="Fant" Source="images/check2.png" x:Name="selectImg1"></Image>
-                    <Image UseLayoutRounding="True"  RenderOptions.BitmapScalingMode="Fant" Source="images/check1.png" Visibility="Hidden" x:Name="selectImg2"></Image>
+        <ControlTemplate x:Key="ckb2temp" TargetType="CheckBox">
+            <StackPanel Background="Transparent"
+                        FocusVisualStyle="{x:Null}"
+                        Orientation="Horizontal"
+                        >
+                <Grid x:Name="gd"
+                      Width="64"
+                      Height="40"
+                      Background="Transparent"
+                      FocusVisualStyle="{x:Null}"
+                      >
+                    <Image x:Name="selectImg1"
+                           RenderOptions.BitmapScalingMode="Fant"
+                           Source="images/check2.png"
+                           UseLayoutRounding="True"
+                           >
+                    </Image>
+                    <Image x:Name="selectImg2"
+                           RenderOptions.BitmapScalingMode="Fant"
+                           Source="images/check1.png"
+                           UseLayoutRounding="True"
+                           Visibility="Hidden"
+                           >
+                    </Image>
                 </Grid>
-                <ContentPresenter Margin="5,0,0,0" TextBlock.Foreground="Black"  RecognizesAccessKey="True" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+                <ContentPresenter Margin="5,0,0,0"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Content="{TemplateBinding Content}"
+                                  RecognizesAccessKey="True"
+                                  TextBlock.Foreground="Black"
+                                  >
+                </ContentPresenter>
             </StackPanel>
             <ControlTemplate.Triggers>
-                <Trigger Property="IsChecked" Value="true"  >
-                    <Setter TargetName="selectImg2" Property="Visibility" Value="Visible" ></Setter>
-                    <Setter TargetName="selectImg1" Property="Visibility" Value="Collapsed" ></Setter>
+                <Trigger Property="IsChecked" Value="true">
+                    <Setter TargetName="selectImg2" Property="Visibility" Value="Visible">
+                    </Setter>
+                    <Setter TargetName="selectImg1" Property="Visibility" Value="Collapsed">
+                    </Setter>
                 </Trigger>
-                <Trigger Property="IsChecked" Value="false"  >
-                    <Setter TargetName="selectImg2" Property="Visibility" Value="Collapsed" ></Setter>
-                    <Setter TargetName="selectImg1" Property="Visibility" Value="Visible" ></Setter>
+                <Trigger Property="IsChecked" Value="false">
+                    <Setter TargetName="selectImg2" Property="Visibility" Value="Collapsed">
+                    </Setter>
+                    <Setter TargetName="selectImg1" Property="Visibility" Value="Visible">
+                    </Setter>
                 </Trigger>
-                <Trigger Property="IsEnabled" Value="false"  >
-                    <Setter TargetName="selectImg2" Property="Visibility" Value="Collapsed" ></Setter>
-                    <Setter TargetName="selectImg1" Property="Visibility" Value="Collapsed" ></Setter>
-                    <Setter TargetName="gd" Property="Background" Value="LightGray" ></Setter>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-        
-        <ControlTemplate x:Key="ckb1temp" TargetType="CheckBox" >
-            <StackPanel Orientation="Horizontal"  FocusVisualStyle="{x:Null}" Background="Transparent" >
-                <Grid Width="32" Height="32" Background="Transparent" x:Name="gd" FocusVisualStyle="{x:Null}"   >
-                    <Image UseLayoutRounding="True"  RenderOptions.BitmapScalingMode="Fant" Source="images/checkbox_disable_36.png" x:Name="selectImg1"></Image>
-                    <Image UseLayoutRounding="True"  RenderOptions.BitmapScalingMode="Fant" Source="images/checkbox_checked_36.png" Visibility="Hidden" x:Name="selectImg2"></Image>
-                </Grid>
-                <ContentPresenter Margin="5,0,0,0" TextBlock.Foreground="#cccccc"  RecognizesAccessKey="True" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
-            </StackPanel>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsChecked" Value="true"  >
-                    <Setter TargetName="selectImg2" Property="Visibility" Value="Visible" ></Setter>
-                    <Setter TargetName="selectImg1" Property="Visibility" Value="Collapsed" ></Setter>
-                </Trigger>
-                <Trigger Property="IsChecked" Value="false"  >
-                    <Setter TargetName="selectImg2" Property="Visibility" Value="Collapsed" ></Setter>
-                    <Setter TargetName="selectImg1" Property="Visibility" Value="Visible" ></Setter>
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="false"  >
-                    <Setter TargetName="selectImg2" Property="Visibility" Value="Collapsed" ></Setter>
-                    <Setter TargetName="selectImg1" Property="Visibility" Value="Collapsed" ></Setter>
-                    <Setter TargetName="gd" Property="Background" Value="LightGray" ></Setter>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter TargetName="selectImg2" Property="Visibility" Value="Collapsed">
+                    </Setter>
+                    <Setter TargetName="selectImg1" Property="Visibility" Value="Collapsed">
+                    </Setter>
+                    <Setter TargetName="gd" Property="Background" Value="LightGray">
+                    </Setter>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
 
-        <ControlTemplate x:Key="rdb1temp" TargetType="RadioButton" >
-            <StackPanel Orientation="Horizontal"  FocusVisualStyle="{x:Null}" Background="Transparent">
-                <Grid Width="40" Height="40" Background="Transparent" x:Name="gd" FocusVisualStyle="{x:Null}"   >
-                    <Image UseLayoutRounding="True"  RenderOptions.BitmapScalingMode="Fant" Source="images/radio2.png" x:Name="selectImg1"></Image>
-                    <Image UseLayoutRounding="True"  RenderOptions.BitmapScalingMode="Fant" Source="images/radio1.png" Visibility="Hidden" x:Name="selectImg2"></Image>
+        <ControlTemplate x:Key="ckb1temp" TargetType="CheckBox">
+            <StackPanel Background="Transparent"
+                        FocusVisualStyle="{x:Null}"
+                        Orientation="Horizontal"
+                        >
+                <Grid x:Name="gd"
+                      Width="32"
+                      Height="32"
+                      Background="Transparent"
+                      FocusVisualStyle="{x:Null}"
+                      >
+                    <Image x:Name="selectImg1"
+                           RenderOptions.BitmapScalingMode="Fant"
+                           Source="images/checkbox_disable_36.png"
+                           UseLayoutRounding="True"
+                           >
+                    </Image>
+                    <Image x:Name="selectImg2"
+                           RenderOptions.BitmapScalingMode="Fant"
+                           Source="images/checkbox_checked_36.png"
+                           UseLayoutRounding="True"
+                           Visibility="Hidden"
+                           >
+                    </Image>
                 </Grid>
-                <ContentPresenter Margin="5,0,0,0" TextBlock.Foreground="#cccccc"  RecognizesAccessKey="True" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+                <ContentPresenter Margin="5,0,0,0"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Content="{TemplateBinding Content}"
+                                  RecognizesAccessKey="True"
+                                  TextBlock.Foreground="#cccccc"
+                                  >
+                </ContentPresenter>
             </StackPanel>
             <ControlTemplate.Triggers>
-                <Trigger Property="IsChecked" Value="true"  >
-                    <Setter TargetName="selectImg2" Property="Visibility" Value="Visible" ></Setter>
-                    <Setter TargetName="selectImg1" Property="Visibility" Value="Collapsed" ></Setter>
+                <Trigger Property="IsChecked" Value="true">
+                    <Setter TargetName="selectImg2" Property="Visibility" Value="Visible">
+                    </Setter>
+                    <Setter TargetName="selectImg1" Property="Visibility" Value="Collapsed">
+                    </Setter>
                 </Trigger>
-                <Trigger Property="IsChecked" Value="false"  >
-                    <Setter TargetName="selectImg2" Property="Visibility" Value="Collapsed" ></Setter>
-                    <Setter TargetName="selectImg1" Property="Visibility" Value="Visible" ></Setter>
+                <Trigger Property="IsChecked" Value="false">
+                    <Setter TargetName="selectImg2" Property="Visibility" Value="Collapsed">
+                    </Setter>
+                    <Setter TargetName="selectImg1" Property="Visibility" Value="Visible">
+                    </Setter>
                 </Trigger>
-                <Trigger Property="IsEnabled" Value="false"  >
-                    <Setter TargetName="selectImg2" Property="Visibility" Value="Collapsed" ></Setter>
-                    <Setter TargetName="selectImg1" Property="Visibility" Value="Collapsed" ></Setter>
-                    <Setter TargetName="gd" Property="Background" Value="LightGray" ></Setter>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter TargetName="selectImg2" Property="Visibility" Value="Collapsed">
+                    </Setter>
+                    <Setter TargetName="selectImg1" Property="Visibility" Value="Collapsed">
+                    </Setter>
+                    <Setter TargetName="gd" Property="Background" Value="LightGray">
+                    </Setter>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-    
+
+        <ControlTemplate x:Key="rdb1temp" TargetType="RadioButton">
+            <StackPanel Background="Transparent"
+                        FocusVisualStyle="{x:Null}"
+                        Orientation="Horizontal"
+                        >
+                <Grid x:Name="gd"
+                      Width="40"
+                      Height="40"
+                      Background="Transparent"
+                      FocusVisualStyle="{x:Null}"
+                      >
+                    <Image x:Name="selectImg1"
+                           RenderOptions.BitmapScalingMode="Fant"
+                           Source="images/radio2.png"
+                           UseLayoutRounding="True"
+                           >
+                    </Image>
+                    <Image x:Name="selectImg2"
+                           RenderOptions.BitmapScalingMode="Fant"
+                           Source="images/radio1.png"
+                           UseLayoutRounding="True"
+                           Visibility="Hidden"
+                           >
+                    </Image>
+                </Grid>
+                <ContentPresenter Margin="5,0,0,0"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Content="{TemplateBinding Content}"
+                                  RecognizesAccessKey="True"
+                                  TextBlock.Foreground="#cccccc"
+                                  >
+                </ContentPresenter>
+            </StackPanel>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="true">
+                    <Setter TargetName="selectImg2" Property="Visibility" Value="Visible">
+                    </Setter>
+                    <Setter TargetName="selectImg1" Property="Visibility" Value="Collapsed">
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="false">
+                    <Setter TargetName="selectImg2" Property="Visibility" Value="Collapsed">
+                    </Setter>
+                    <Setter TargetName="selectImg1" Property="Visibility" Value="Visible">
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter TargetName="selectImg2" Property="Visibility" Value="Collapsed">
+                    </Setter>
+                    <Setter TargetName="selectImg1" Property="Visibility" Value="Collapsed">
+                    </Setter>
+                    <Setter TargetName="gd" Property="Background" Value="LightGray">
+                    </Setter>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50">
+            </RowDefinition>
+            <RowDefinition Height="*">
+            </RowDefinition>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0"   Background="Transparent" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 20 0">
+        <Grid Grid.Row="0"
+              Background="Transparent"
+              MouseLeftButtonDown="Grid_MouseLeftButtonDown"
+              >
+            <StackPanel Margin="0,0,20,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal"
+                        >
 
-                <Button Width="32" Height="32" Name="btn_min"  Click="btn_min_Clik"  Margin="0 0 10 0">
+                <Button Name="btn_min"
+                        Width="32"
+                        Height="32"
+                        Margin="0,0,10,0"
+                        Click="btn_min_Clik"
+                        >
                     <Button.Template>
-                        <ControlTemplate  TargetType="Button">
-                            <Grid x:Name="gridC"  >
+                        <ControlTemplate TargetType="Button">
+                            <Grid x:Name="gridC">
                                 <Grid.Background>
-                                    <ImageBrush ImageSource="images/min1.png"></ImageBrush>
+                                    <ImageBrush ImageSource="images/min1.png">
+                                    </ImageBrush>
                                 </Grid.Background>
-                                <ContentPresenter Margin="6,2" Focusable="False"></ContentPresenter>
+                                <ContentPresenter Margin="6,2" Focusable="False">
+                                </ContentPresenter>
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="true">
                                     <Setter TargetName="gridC" Property="Background">
                                         <Setter.Value>
-                                            <ImageBrush ImageSource="images/min2.png"></ImageBrush>
+                                            <ImageBrush ImageSource="images/min2.png">
+                                            </ImageBrush>
                                         </Setter.Value>
                                     </Setter>
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="true">
                                     <Setter TargetName="gridC" Property="Background">
                                         <Setter.Value>
-                                            <ImageBrush ImageSource="images/min1.png"></ImageBrush>
+                                            <ImageBrush ImageSource="images/min1.png">
+                                            </ImageBrush>
                                         </Setter.Value>
                                     </Setter>
                                 </Trigger>
@@ -258,27 +381,35 @@
                     </Button.Template>
 
                 </Button>
-                <Button Width="32" Height="32" Name="btn_close"  Click="btn_close_Clik">
+                <Button Name="btn_close"
+                        Width="32"
+                        Height="32"
+                        Click="btn_close_Clik"
+                        >
                     <Button.Template>
-                        <ControlTemplate  TargetType="Button">
-                            <Grid x:Name="gridC"  >
+                        <ControlTemplate TargetType="Button">
+                            <Grid x:Name="gridC">
                                 <Grid.Background>
-                                    <ImageBrush ImageSource="images/button_close_normal_32.png"></ImageBrush>
+                                    <ImageBrush ImageSource="images/button_close_normal_32.png">
+                                    </ImageBrush>
                                 </Grid.Background>
-                                <ContentPresenter Margin="6,2" Focusable="False"></ContentPresenter>
+                                <ContentPresenter Margin="6,2" Focusable="False">
+                                </ContentPresenter>
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="true">
                                     <Setter TargetName="gridC" Property="Background">
                                         <Setter.Value>
-                                            <ImageBrush ImageSource="images/button_close_hover_32.png"></ImageBrush>
+                                            <ImageBrush ImageSource="images/button_close_hover_32.png">
+                                            </ImageBrush>
                                         </Setter.Value>
                                     </Setter>
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="true">
                                     <Setter TargetName="gridC" Property="Background">
                                         <Setter.Value>
-                                            <ImageBrush ImageSource="images/button_close_click_32.png"></ImageBrush>
+                                            <ImageBrush ImageSource="images/button_close_click_32.png">
+                                            </ImageBrush>
                                         </Setter.Value>
                                     </Setter>
                                 </Trigger>
@@ -288,122 +419,344 @@
 
                 </Button>
             </StackPanel>
-            
+
         </Grid>
 
         <Grid Grid.Row="1" Background="Transparent">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"></RowDefinition> 
-                <RowDefinition  Height="*"></RowDefinition>
+                <RowDefinition Height="50">
+                </RowDefinition>
+                <RowDefinition Height="*">
+                </RowDefinition>
             </Grid.RowDefinitions>
             <Grid Background="Transparent" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="性能监控总开关"  Margin="20 0 0 0"  Foreground="#cccccc" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                    <CheckBox Name="checkall" Click="checkall_Click" Template="{StaticResource ckb2temp}"> 
-                </CheckBox> 
-                    <TextBlock Text="日志开关"  Margin="20 0 0 0"  Foreground="#cccccc" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                    <CheckBox Name="logenable" Click="logenable_Click" Template="{StaticResource ckb2temp}">
-                     
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="20,0,0,0"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="26"
+                               Foreground="#cccccc"
+                               Text="性能监控总开关"
+                               >
+                    </TextBlock>
+                    <CheckBox Name="checkall"
+                              Click="checkall_Click"
+                              Template="{StaticResource ckb2temp}"
+                              >
+                    </CheckBox>
+                    <TextBlock Margin="20,0,0,0"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="26"
+                               Foreground="#cccccc"
+                               Text="日志开关"
+                               >
+                    </TextBlock>
+                    <CheckBox Name="logenable"
+                              Click="logenable_Click"
+                              Template="{StaticResource ckb2temp}"
+                              >
+
                     </CheckBox>
 
-                
+
                 </StackPanel>
 
-                <TextBlock Grid.Row="4" VerticalAlignment="Center"  Foreground="#7E7E7E" Margin="0 0 40 0"
-                                           FontSize="22" HorizontalAlignment="Right">
-                                    <Hyperlink Click="Hyperlink_Click" TextDecorations="None">性能监控支持的游戏列表</Hyperlink>
+                <TextBlock Grid.Row="4"
+                           Margin="0,0,40,0"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           FontSize="22"
+                           Foreground="#7E7E7E"
+                           >
+                    <Hyperlink Click="Hyperlink_Click" TextDecorations="None">性能监控支持的游戏列表</Hyperlink>
                 </TextBlock>
-                 
+
             </Grid>
 
-            <GroupBox Header="性能监控设置" BorderBrush="#cccccc" Foreground="#cccccc" FontSize="22" Grid.Row="1" Margin="10">
+            <GroupBox Grid.Row="1"
+                      Margin="10"
+                      BorderBrush="#cccccc"
+                      FontSize="22"
+                      Foreground="#cccccc"
+                      Header="性能监控设置"
+                      >
                 <ScrollViewer>
                     <ScrollViewer.Resources>
-                        <Style TargetType="ScrollBar" BasedOn="{StaticResource ScrollStyle_Mobile}"></Style>
+                        <Style BasedOn="{StaticResource ScrollStyle_Mobile}" TargetType="ScrollBar">
+                        </Style>
                     </ScrollViewer.Resources>
                     <StackPanel Margin="5">
-                    <StackPanel Margin="10">
-                        <TextBlock Text="监控内容设置"  Margin="0 5"></TextBlock>
+                        <StackPanel Margin="10">
+                            <StackPanel Margin="0,5" Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center"
+                                           Foreground="LightGray"
+                                           Text="监控内容设置"
+                                           >
+                                </TextBlock>
+                                <Button Width="120"
+                                        Height="40"
+                                        Margin="20,0"
+                                        Click="Button_Click"
+                                        Foreground="LightGray"
+                                        ToolTip="点击后刷新游戏内部的状态显示栏"
+                                        >
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="bd"
+                                                    Background="#191d23"
+                                                    BorderBrush="Gray"
+                                                    BorderThickness="1"
+                                                    CornerRadius="20"
+                                                    >
+                                                <TextBlock HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           Text="重载配置"
+                                                           >
 
-                    <StackPanel Margin="0 5" Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock Text="基本" VerticalAlignment="Center"></TextBlock>
-                                <CheckBox Margin="15 0 0 0" VerticalAlignment="Center" IsChecked="{Binding FPS,Converter={StaticResource IntToBool},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Template="{StaticResource ckb1temp}">FPS</CheckBox> 
-                    </StackPanel>
+                                                </TextBlock>
+
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="bd" Property="Background" Value="#333333">
+                                                    </Setter>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter TargetName="bd" Property="Background" Value="#191d23">
+                                                    </Setter>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </StackPanel>
 
 
-                    <WrapPanel Margin="0 0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock Text="CPU" VerticalAlignment="Top" Margin="0 10 0 0"></TextBlock>
-                                <WrapPanel Margin="0 0" Orientation="Horizontal" VerticalAlignment="Center">
-                                    <CheckBox Margin="15 5 0 0" VerticalAlignment="Center" IsChecked="{Binding CPU.Clock,Converter={StaticResource IntToBool},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Template="{StaticResource ckb1temp}">频率(MHz)</CheckBox>
+                            <StackPanel Margin="0,5"
+                                        VerticalAlignment="Center"
+                                        Orientation="Horizontal"
+                                        >
+                                <TextBlock VerticalAlignment="Center" Text="基本">
+                                </TextBlock>
+                                <CheckBox Margin="15,0,0,0"
+                                          VerticalAlignment="Center"
+                                          IsChecked="{Binding FPS, Converter={StaticResource IntToBool}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                          Template="{StaticResource ckb1temp}"
+                                          >
+                                    FPS
+                                </CheckBox>
+                            </StackPanel>
 
 
-                                    <CheckBox Margin="15 5 0 0" VerticalAlignment="Center" IsChecked="{Binding CPU.Usage,Converter={StaticResource IntToBool},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Template="{StaticResource ckb1temp}">占用率(%)</CheckBox>
+                            <WrapPanel Margin="0,0"
+                                       VerticalAlignment="Center"
+                                       Orientation="Horizontal"
+                                       >
+                                <TextBlock Margin="0,10,0,0"
+                                           VerticalAlignment="Top"
+                                           Text="CPU"
+                                           >
+                                </TextBlock>
+                                <WrapPanel Margin="0,0"
+                                           VerticalAlignment="Center"
+                                           Orientation="Horizontal"
+                                           >
+                                    <CheckBox Margin="15,5,0,0"
+                                              VerticalAlignment="Center"
+                                              IsChecked="{Binding CPU.Clock, Converter={StaticResource IntToBool}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              Template="{StaticResource ckb1temp}"
+                                              >
+                                        频率(MHz)
+                                    </CheckBox>
 
-                                    <CheckBox Margin="15 5 0 0" VerticalAlignment="Center" IsChecked="{Binding CPU.Temperature,Converter={StaticResource IntToBool},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Template="{StaticResource ckb1temp}">温度(℃)</CheckBox>
 
-                                    <CheckBox Margin="15 5 0 0" VerticalAlignment="Center" IsChecked="{Binding CPU.Power,Converter={StaticResource IntToBool},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Template="{StaticResource ckb1temp}">功耗(W)</CheckBox>
+                                    <CheckBox Margin="15,5,0,0"
+                                              VerticalAlignment="Center"
+                                              IsChecked="{Binding CPU.Usage, Converter={StaticResource IntToBool}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              Template="{StaticResource ckb1temp}"
+                                              >
+                                        占用率(%)
+                                    </CheckBox>
 
-                                    <CheckBox Margin="15 5 0 0" VerticalAlignment="Center" IsChecked="{Binding CPU.FanSpeed,Converter={StaticResource IntToBool},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Template="{StaticResource ckb1temp}">风扇转速(RPM)</CheckBox>
+                                    <CheckBox Margin="15,5,0,0"
+                                              VerticalAlignment="Center"
+                                              IsChecked="{Binding CPU.Temperature, Converter={StaticResource IntToBool}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              Template="{StaticResource ckb1temp}"
+                                              >
+                                        温度(℃)
+                                    </CheckBox>
+
+                                    <CheckBox Margin="15,5,0,0"
+                                              VerticalAlignment="Center"
+                                              IsChecked="{Binding CPU.Power, Converter={StaticResource IntToBool}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              Template="{StaticResource ckb1temp}"
+                                              >
+                                        功耗(W)
+                                    </CheckBox>
+
+                                    <CheckBox Margin="15,5,0,0"
+                                              VerticalAlignment="Center"
+                                              IsChecked="{Binding CPU.FanSpeed, Converter={StaticResource IntToBool}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              Template="{StaticResource ckb1temp}"
+                                              >
+                                        风扇转速(RPM)
+                                    </CheckBox>
                                 </WrapPanel>
                             </WrapPanel>
 
-                    <WrapPanel Margin="0 0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock Text="GPU" VerticalAlignment="Top" Margin="0 10 0 0"></TextBlock>
-                        <WrapPanel Margin="0 5" Orientation="Horizontal" VerticalAlignment="Center">
+                            <WrapPanel Margin="0,0"
+                                       VerticalAlignment="Center"
+                                       Orientation="Horizontal"
+                                       >
+                                <TextBlock Margin="0,10,0,0"
+                                           VerticalAlignment="Top"
+                                           Text="GPU"
+                                           >
+                                </TextBlock>
+                                <WrapPanel Margin="0,5"
+                                           VerticalAlignment="Center"
+                                           Orientation="Horizontal"
+                                           >
 
-                                    <CheckBox Margin="15 5 0 0" VerticalAlignment="Center" IsChecked="{Binding GPU.Clock, Converter={StaticResource IntToBool},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Template="{StaticResource ckb1temp}">频率(MHz)</CheckBox>
+                                    <CheckBox Margin="15,5,0,0"
+                                              VerticalAlignment="Center"
+                                              IsChecked="{Binding GPU.Clock, Converter={StaticResource IntToBool}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              Template="{StaticResource ckb1temp}"
+                                              >
+                                        频率(MHz)
+                                    </CheckBox>
 
 
-                                    <CheckBox Margin="15 5 0 0" VerticalAlignment="Center" IsChecked="{Binding GPU.Usage, Converter={StaticResource IntToBool},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Template="{StaticResource ckb1temp}">占用率(%)</CheckBox>
+                                    <CheckBox Margin="15,5,0,0"
+                                              VerticalAlignment="Center"
+                                              IsChecked="{Binding GPU.Usage, Converter={StaticResource IntToBool}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              Template="{StaticResource ckb1temp}"
+                                              >
+                                        占用率(%)
+                                    </CheckBox>
 
-                                    <CheckBox Margin="15 5 0 0" VerticalAlignment="Center" IsChecked="{Binding GPU.Temperature, Converter={StaticResource IntToBool},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Template="{StaticResource ckb1temp}">温度(℃)</CheckBox>
+                                    <CheckBox Margin="15,5,0,0"
+                                              VerticalAlignment="Center"
+                                              IsChecked="{Binding GPU.Temperature, Converter={StaticResource IntToBool}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              Template="{StaticResource ckb1temp}"
+                                              >
+                                        温度(℃)
+                                    </CheckBox>
 
-                                    <CheckBox Margin="15 5 0 0" VerticalAlignment="Center" IsChecked="{Binding GPU.Power, Converter={StaticResource IntToBool},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Template="{StaticResource ckb1temp}">功耗(W)</CheckBox>
+                                    <CheckBox Margin="15,5,0,0"
+                                              VerticalAlignment="Center"
+                                              IsChecked="{Binding GPU.Power, Converter={StaticResource IntToBool}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              Template="{StaticResource ckb1temp}"
+                                              >
+                                        功耗(W)
+                                    </CheckBox>
 
-                                    <CheckBox Margin="15 5 0 0" VerticalAlignment="Center" IsChecked="{Binding GPU.FanSpeed, Converter={StaticResource IntToBool},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Template="{StaticResource ckb1temp}">风扇转速(RPM)</CheckBox>
+                                    <CheckBox Margin="15,5,0,0"
+                                              VerticalAlignment="Center"
+                                              IsChecked="{Binding GPU.FanSpeed, Converter={StaticResource IntToBool}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              Template="{StaticResource ckb1temp}"
+                                              >
+                                        风扇转速(RPM)
+                                    </CheckBox>
 
-                                    <CheckBox Margin="15 5 0 0" VerticalAlignment="Center" IsChecked="{Binding GPU.Mem_Usage, Converter={StaticResource IntToBool},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  Template="{StaticResource ckb1temp}">显存占用率(%)</CheckBox>
-                               
-                        </WrapPanel>
-                    </WrapPanel>
+                                    <CheckBox Margin="15,5,0,0"
+                                              VerticalAlignment="Center"
+                                              IsChecked="{Binding GPU.Mem_Usage, Converter={StaticResource IntToBool}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              Template="{StaticResource ckb1temp}"
+                                              >
+                                        显存占用率(%)
+                                    </CheckBox>
 
-
-
-
-                    <WrapPanel Margin="0 0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock Text="内存" VerticalAlignment="Top" Margin="0 10 0 0"></TextBlock>
-                        <WrapPanel Margin="0 5" Orientation="Horizontal" VerticalAlignment="Center">
-                                    <CheckBox Margin="15 5 0 0" IsChecked="{Binding  MEM.Clock, Converter={StaticResource IntToBool},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  VerticalAlignment="Center" Template="{StaticResource ckb1temp}">
-                                    内存频率(MHz)
-                                </CheckBox>
-                                    <CheckBox Margin="15 5 0 0" IsChecked="{Binding  MEM.Usage, Converter={StaticResource IntToBool},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  VerticalAlignment="Center" Template="{StaticResource ckb1temp}">
-                                    内存占用(%)
-                                </CheckBox> 
-                        </WrapPanel>
-                    </WrapPanel>
-
-                </StackPanel>
-
-                    <StackPanel Margin="10">
-                        <TextBlock Text="监控内容样式"  Margin="0 5"></TextBlock>
- 
-                        <WrapPanel Margin="0 0" Orientation="Horizontal" VerticalAlignment="Center">
-                                <RadioButton Margin="15 5 0 0"  Width="200"  IsChecked="{Binding Orientation, Converter={StaticResource IntToBoolRev},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" GroupName="style1"  VerticalAlignment="Center" Template="{StaticResource rdb1temp}">
-                                        横向样式
-                                    </RadioButton>
-
-                                <RadioButton Margin="15 5 0 0"  Width="200"  IsChecked="{Binding Orientation, Converter={StaticResource IntToBool},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" GroupName="style1"  VerticalAlignment="Center" Template="{StaticResource rdb1temp}">
-                                        竖向样式
-                                    </RadioButton>  
-                            
+                                </WrapPanel>
                             </WrapPanel>
 
-                        <WrapPanel Margin="0 0" Orientation="Horizontal" VerticalAlignment="Center">
-                                <RadioButton Margin="15 5 0 0" Width="200" IsChecked="{Binding Location, Converter={StaticResource IntToBoolRev},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  GroupName="style2" VerticalAlignment="Center" Template="{StaticResource rdb1temp}">
+
+
+
+                            <WrapPanel Margin="0,0"
+                                       VerticalAlignment="Center"
+                                       Orientation="Horizontal"
+                                       >
+                                <TextBlock Margin="0,10,0,0"
+                                           VerticalAlignment="Top"
+                                           Text="内存"
+                                           >
+                                </TextBlock>
+                                <WrapPanel Margin="0,5"
+                                           VerticalAlignment="Center"
+                                           Orientation="Horizontal"
+                                           >
+                                    <CheckBox Margin="15,5,0,0"
+                                              VerticalAlignment="Center"
+                                              IsChecked="{Binding MEM.Clock, Converter={StaticResource IntToBool}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              Template="{StaticResource ckb1temp}"
+                                              >
+                                        内存频率(MHz)
+                                    </CheckBox>
+                                    <CheckBox Margin="15,5,0,0"
+                                              VerticalAlignment="Center"
+                                              IsChecked="{Binding MEM.Usage, Converter={StaticResource IntToBool}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              Template="{StaticResource ckb1temp}"
+                                              >
+                                        内存占用(%)
+                                    </CheckBox>
+                                </WrapPanel>
+                            </WrapPanel>
+
+                        </StackPanel>
+
+                        <StackPanel Margin="10">
+                            <TextBlock Margin="0,5" Text="监控内容样式">
+                            </TextBlock>
+
+                            <WrapPanel Margin="0,0"
+                                       VerticalAlignment="Center"
+                                       Orientation="Horizontal"
+                                       >
+                                <RadioButton Width="200"
+                                             Margin="15,5,0,0"
+                                             VerticalAlignment="Center"
+                                             GroupName="style1"
+                                             IsChecked="{Binding Orientation, Converter={StaticResource IntToBoolRev}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                             Template="{StaticResource rdb1temp}"
+                                             >
+                                    横向样式
+                                </RadioButton>
+
+                                <RadioButton Width="200"
+                                             Margin="15,5,0,0"
+                                             VerticalAlignment="Center"
+                                             GroupName="style1"
+                                             IsChecked="{Binding Orientation, Converter={StaticResource IntToBool}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                             Template="{StaticResource rdb1temp}"
+                                             >
+                                    竖向样式
+                                </RadioButton>
+
+                            </WrapPanel>
+
+                            <WrapPanel Margin="0,0"
+                                       VerticalAlignment="Center"
+                                       Orientation="Horizontal"
+                                       >
+                                <RadioButton Width="200"
+                                             Margin="15,5,0,0"
+                                             VerticalAlignment="Center"
+                                             GroupName="style2"
+                                             IsChecked="{Binding Location, Converter={StaticResource IntToBoolRev}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                             Template="{StaticResource rdb1temp}"
+                                             >
                                     屏幕左上角
                                 </RadioButton>
 
-                                <RadioButton Margin="15 5 0 0" Width="200"  IsChecked="{Binding Location, Converter={StaticResource IntToBool},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  GroupName="style2"  VerticalAlignment="Center" Template="{StaticResource rdb1temp}">
+                                <RadioButton Width="200"
+                                             Margin="15,5,0,0"
+                                             VerticalAlignment="Center"
+                                             GroupName="style2"
+                                             IsChecked="{Binding Location, Converter={StaticResource IntToBool}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                             Template="{StaticResource rdb1temp}"
+                                             >
                                     屏幕右上角
                                 </RadioButton>
 
@@ -411,16 +764,37 @@
 
 
 
-                            <WrapPanel Margin="0 0" Orientation="Horizontal" VerticalAlignment="Center">
-                                <RadioButton Margin="15 5 0 0" Width="200"  IsChecked="{Binding FontSize,Converter={StaticResource Font2Size1},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   GroupName="style3" VerticalAlignment="Center" Template="{StaticResource rdb1temp}">
+                            <WrapPanel Margin="0,0"
+                                       VerticalAlignment="Center"
+                                       Orientation="Horizontal"
+                                       >
+                                <RadioButton Width="200"
+                                             Margin="15,5,0,0"
+                                             VerticalAlignment="Center"
+                                             GroupName="style3"
+                                             IsChecked="{Binding FontSize, Converter={StaticResource Font2Size1}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                             Template="{StaticResource rdb1temp}"
+                                             >
                                     较小字体
                                 </RadioButton>
 
-                                <RadioButton Margin="15 5 0 0" Width="200" IsChecked="{Binding FontSize,Converter={StaticResource Font2Size2},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  GroupName="style3"  VerticalAlignment="Center" Template="{StaticResource rdb1temp}">
+                                <RadioButton Width="200"
+                                             Margin="15,5,0,0"
+                                             VerticalAlignment="Center"
+                                             GroupName="style3"
+                                             IsChecked="{Binding FontSize, Converter={StaticResource Font2Size2}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                             Template="{StaticResource rdb1temp}"
+                                             >
                                     标准字体
                                 </RadioButton>
 
-                                <RadioButton Margin="15 5 0 0" Width="200"  IsChecked="{Binding FontSize,Converter={StaticResource Font2Size3},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" GroupName="style3"  VerticalAlignment="Center" Template="{StaticResource rdb1temp}">
+                                <RadioButton Width="200"
+                                             Margin="15,5,0,0"
+                                             VerticalAlignment="Center"
+                                             GroupName="style3"
+                                             IsChecked="{Binding FontSize, Converter={StaticResource Font2Size3}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                             Template="{StaticResource rdb1temp}"
+                                             >
                                     较大字体
                                 </RadioButton>
 
@@ -428,14 +802,15 @@
 
                         </StackPanel>
 
-                </StackPanel>
+                    </StackPanel>
 
                 </ScrollViewer>
             </GroupBox>
-            
+
         </Grid>
 
-        <Grid Name="gridMsg" Grid.RowSpan="2"></Grid>
+        <Grid Name="gridMsg" Grid.RowSpan="2">
+        </Grid>
 
     </Grid>
 </Window>

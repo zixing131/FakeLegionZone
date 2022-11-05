@@ -36,8 +36,9 @@ namespace FakeLegionZone
 			LogHelper.Log("[App] [OnStartup] LZTray 启动。");
 			var isrealenable = RegistryHelper.Instance.GetIsPerformMonitorReal();
 			RegistryHelper.Instance.SetIsPerformMonitor(isrealenable);
+			 
 
-			using (RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Lenovo\\LegionZone\\", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.FullControl))
+            using (RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Lenovo\\LegionZone\\", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.FullControl))
 			{
 				if (registryKey != null)
 				{
@@ -177,7 +178,7 @@ namespace FakeLegionZone
 		/// 初始化启动时期的注入
 		/// </summary>
 		/// <exception cref="NotImplementedException"></exception>
-		private void initFirstInject()
+		public void initFirstInject()
         {
             try
             {
@@ -932,6 +933,7 @@ namespace FakeLegionZone
 			try
 			{
 				ProcessWithComputer(ref hardwareInfo);
+
 				int loadPercent = hardwareInfo.CPUInfo.LoadPercent;
 				int cpuFreq = Convert.ToInt32(hardwareInfo.CPUInfo.CurFreq * 100.0);
 				Convert.ToInt32(hardwareInfo.CPUInfo.FreqMax);
@@ -1482,7 +1484,21 @@ namespace FakeLegionZone
 			new Thread(new ParameterizedThreadStart(this.InjectThread)).Start(gameInfo);
 		}
 
-		private void unhookThread()
+        // Token: 0x060000E4 RID: 228 RVA: 0x000057AC File Offset: 0x000039AC
+        private void UnInject(GameInfo gameInfo)
+        { 
+            string text = Path.Combine(Utils.GetBasePath(), gameInfo.Is64 ? "LZToolkit64.exe" : "LZToolkit32.exe");
+            string text2 = Path.Combine(Utils.GetBasePath(), gameInfo.Is64 ? "LzUnHook64.dll" : "LzUnHook32.dll");
+            if (!VerifySignature.Verify(text) || !VerifySignature.Verify(text2))
+            {
+                LogHelper.Log("[App] [Inject] 验证签名失败，终止取消注入：exe_file_path = " + text + " \t dll_file_path = " + text2);
+                return;
+            }
+            LogHelper.Log(string.Format("[App] [HandleGameUninjectEvent] 准备开始取消注入：process_id = {0}", gameInfo.ProcessId));
+            UnInjectThread(gameInfo);
+        }
+        
+        private void unhookThread()
 		{
 			return;
 			//foreach (GameInfo gameInfo in listStartedGame)
@@ -1515,10 +1531,10 @@ namespace FakeLegionZone
 				return;
 			}
 			Func<GameInfo, bool> _9__0 = null;
-			for (int i = 1; i <= 1; i++)
+			for (int i = 1; i <= 3; i++)
 			{
-				LogHelper.Log(string.Format("[App] [InjectThread] 开始注入前计时：process_id = {0}, count = {1}", gameInfo.ProcessId, i));
-				Thread.Sleep(1000);
+				Thread.Sleep(200);
+				LogHelper.Log(string.Format("[App] [InjectThread] 开始注入前计时：process_id = {0}, count = {1}", gameInfo.ProcessId, i)); 
 				if (gameInfo.IsInjected)
 				{
 					LogHelper.Log(string.Format("[App] [InjectThread] 游戏已注入成功，停止重试：process_id = {0}", gameInfo.ProcessId));
@@ -1578,8 +1594,42 @@ namespace FakeLegionZone
 			}
 		}
 
-		// Token: 0x060000E6 RID: 230 RVA: 0x00005B9C File Offset: 0x00003D9C
-		private void InitUpdate()
+        private void UnInjectThread(object oGameInfo)
+        {
+            GameInfo gameInfo = oGameInfo as GameInfo;
+            if (gameInfo == null)
+            {
+                return;
+            }
+            Func<GameInfo, bool> _9__0 = null;
+            
+            string text = Path.Combine(Utils.GetBasePath(), gameInfo.Is64 ? "LZToolkit64.exe" : "LZToolkit32.exe");
+            if (!File.Exists(text))
+            {
+                LogHelper.Log(string.Format("[App] [UnInject] 反注入程序文件未找到：path = {0}, process_id = {1}", text, gameInfo.ProcessId));
+                return;
+            }
+            string text2 = Path.Combine(Utils.GetBasePath(), gameInfo.Is64 ? "LzUnHook64.dll" : "LzUnHook32.dll");
+            if (!File.Exists(text2))
+            {
+                LogHelper.Log(string.Format("[App] [UnInject] 反注入 dll 文件未找到：path = {0}, process_id = {1}", text2, gameInfo.ProcessId));
+                return;
+            }
+            string text3 = string.Format(string.Format("{0} \"{1}\"", gameInfo.ProcessId, text2), Array.Empty<object>());
+            try
+            {
+                Process.Start(text, text3);
+                LogHelper.Log(string.Format("[App] [Inject] 调用反注入程序结束：process_id = {0} \t exe_path = {1} \t dll_path = {2}", gameInfo.ProcessId, text, text2));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log(string.Format("[App] [Inject] 调用反注入程序异常：process_id = {0} \t exe_path = {1} \t dll_path = {2} \t arguments = {3} \t ex_message = {4}", new object[] { gameInfo.ProcessId, text, text2, text3, ex.Message }));
+            } 
+            
+        }
+        
+        // Token: 0x060000E6 RID: 230 RVA: 0x00005B9C File Offset: 0x00003D9C
+        private void InitUpdate()
 		{
 			this.updateTimer = new DispatcherTimer();
 			int num = 30;
@@ -2020,6 +2070,18 @@ namespace FakeLegionZone
 		{
 			PluginDlls.Instance.Execute(pluginName, jsonData);
 		}
+        /// <summary>
+		/// 反注入所有的数据
+		/// </summary>
+		/// <exception cref="NotImplementedException"></exception>
+		public void UnInjectAll()
+		{
+            foreach(var info in listStartedGame)
+			{
+				UnInject(info);
+			}
+			listStartedGame.Clear();
+        }
 
 		//// Token: 0x060000FB RID: 251 RVA: 0x000066C4 File Offset: 0x000048C4
 		//[DebuggerNonUserCode]
